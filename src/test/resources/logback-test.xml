@@ -15,7 +15,7 @@
     </rollingPolicy>
   </appender>
 
-  <logger name="com.example">
+  <logger name="jp.xet.uncommons.web">
     <level value="INFO" />
   </logger>
 

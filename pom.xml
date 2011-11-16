@@ -19,13 +19,33 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <scm>
+    <url>scm:git:git@github.com:dai0304/uncommons-web.git</url>
+    <connection>scm:git:git@github.com:dai0304/uncommons-web.git</connection>
+    <developerConnection>scm:git:git@github.com:dai0304/uncommons-web.git</developerConnection>
+  </scm>
+  <build>
+   <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>1.0</version>
+      </extension>
+    </extensions>
+  </build>
   <dependencies>
     <!-- TEST DEPENDENCIES -->
     <dependency>
       <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
+      <artifactId>junit-dep</artifactId>
+      <version>4.10</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
@@ -69,30 +89,72 @@
     
     <!-- COMMONS DEPENDENCIES -->
     <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>3.0.20100224</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>r09</version>
+      <version>${guava-version}</version>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
+      <version>${commons-lang-version}</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.0.1</version>
+      <version>${commons-io-version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>${spring-security-version}</version>
     </dependency>
   </dependencies>
   <repositories>
+    <!-- for browser http://s3browse.springsource.com/browse/maven.springframework.org/ -->
+    <repository>
+      <id>spring-maven-release</id>
+      <name>Spring Maven Release Repository</name>
+      <url>http://maven.springframework.org/release</url>
+    </repository>
+    <repository>
+      <id>spring-milestone</id>
+      <name>Spring Maven MILESTONE Repository</name>
+      <url>http://maven.springframework.org/milestone</url>
+    </repository>
+
     <repository>
       <id>jiemamy.org-release</id>
       <name>Jiemamy Repository</name>
       <url>http://maven.jiemamy.org/release</url>
     </repository>
   </repositories>
+  <distributionManagement>
+    <repository>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/var/www/maven.xet.jp/release</url>
+    </repository>
+    <snapshotRepository>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/var/www/maven.xet.jp/snapshot</url>
+    </snapshotRepository>
+    <site>
+      <id>maven.xet.jp</id>
+      <url>scp://maven.xet.jp/var/www/maven.xet.jp/site/${project.artifactId}/${project.version}</url>
+    </site>
+  </distributionManagement>
   <properties>
-    <slf4j-version>1.6.1</slf4j-version>
-    <logback-version>0.9.28</logback-version>
+    <slf4j-version>[1.6.2,1.7.0)</slf4j-version>
+    <logback-version>[0.9.0,0.10.0)</logback-version>
+    <spring-security-version>3.1.0.RC3</spring-security-version>
+    <guava-version>10.0.1</guava-version>
+    <commons-lang-version>2.6</commons-lang-version>
+    <commons-io-version>2.0.1</commons-io-version>
   </properties>
 </project>
