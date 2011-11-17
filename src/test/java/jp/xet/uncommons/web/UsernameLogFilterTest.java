@@ -28,6 +28,7 @@ import org.junit.Test;
  * @version $Id$
  * @author daisuke
  */
+@SuppressWarnings("javadoc")
 public class UsernameLogFilterTest {
 	
 	@Test
@@ -35,5 +36,4 @@ public class UsernameLogFilterTest {
 	public void test() {
 		fail("Not yet implemented");
 	}
-	
 }
