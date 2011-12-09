@@ -18,17 +18,16 @@ package jp.xet.uncommons.web;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * ログイン中のユーザ名を SLF4J のログに出力するためのServletFilter実装クラス。
@@ -37,7 +36,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @version $Id$
  * @author daisuke
  */
-public class UsernameLogFilter implements Filter {
+public class UsernameLogFilter extends OncePerRequestFilter {
 	
 	private static final String USER_KEY = "username";
 	
@@ -47,8 +46,8 @@ public class UsernameLogFilter implements Filter {
 	}
 	
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-			ServletException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 		SecurityContext ctx = SecurityContextHolder.getContext();
 		Authentication auth = ctx.getAuthentication();
 		
@@ -59,17 +58,12 @@ public class UsernameLogFilter implements Filter {
 		}
 		
 		try {
-			chain.doFilter(request, response);
+			filterChain.doFilter(request, response);
 		} finally {
 			if (successfulRegistration) {
 				MDC.remove(USER_KEY);
 			}
 		}
-	}
-	
-	@Override
-	@SuppressWarnings("unused")
-	public void init(FilterConfig config) throws ServletException {
 	}
 	
 	/**
