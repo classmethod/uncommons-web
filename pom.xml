@@ -126,6 +126,19 @@
       <artifactId>spring-security-core</artifactId>
       <version>${spring-security-version}</version>
     </dependency>
+    <!-- ここから: spring-security-coreが v3.0.6依存なので強制上書き -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-expression</artifactId>
+      <version>3.1.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>3.1.0.RELEASE</version>
+    </dependency>
+    <!-- ここまで -->
+    
   </dependencies>
   <repositories>
     <!-- for browser http://s3browse.springsource.com/browse/maven.springframework.org/ -->
