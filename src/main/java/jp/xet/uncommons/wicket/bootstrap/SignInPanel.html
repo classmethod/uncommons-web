@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" dir="ltr"
+    xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head profile="http://purl.org/net/ns/metaprof">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="index,follow" />
+  <meta http-equiv="content-style-type" content="text/css" />
+  <meta http-equiv="content-script-type" content="text/javascript" />
+  <meta http-equiv="content-language" content="ja" />
+  <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
+  <title>uncommons-wicket - login</title>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <div class="row">
+      <wicket:panel>
+        <form class="form-horizontal" id="loginForm" wicket:id="signInForm">
+          <div class="control-group" wicket:id="usernameGroup">
+            <label for="username" class="control-label xlarge">Email / Username</label>
+            <div class="controls">
+              <input id="username" type="text" class="xlarge" wicket:id="username"/>
+            </div>
+          </div>
+          <div class="control-group" wicket:id="passwordGroup">
+            <label for="password" class="control-label xlarge">Password</label>
+            <div class="controls">
+              <input id="password" type="password" class="xlarge" wicket:id="password"/>
+            </div>
+          </div>
+          <wicket:enclosure child="rememberMeGroup:rememberMe">
+            <div class="control-group" wicket:id="rememberMeGroup">
+              <label for="rememberMe" class="control-label xlarge">Remember me</label>
+              <div class="controls">
+                <input type="checkbox" id="rememberMe" wicket:id="rememberMe"/>
+              </div>
+            </div>
+          </wicket:enclosure>
+          <div class="form-actions">
+            <input class="btn-primary" type="submit" value="Login" />
+            <button class="btn" type="reset">Reset</button>
+          </div>
+        </form>
+      </wicket:panel>
+    </div>
+  </div>
+</body>
+</html>

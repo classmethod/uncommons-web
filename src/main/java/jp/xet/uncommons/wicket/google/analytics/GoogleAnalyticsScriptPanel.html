@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<body>
+<wicket:panel>
+  var _gaq = _gaq || [];
+
+  _gaq.push(['_setAccount', '<wicket:container wicket:id="accountName"></wicket:container>']);
+  _gaq.push(['_setDomainName', '<wicket:container wicket:id="domainName"></wicket:container>']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview', '<wicket:container wicket:id="trackingUrl"></wicket:container>']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+  })();
+</wicket:panel>
+</body>
+</html>

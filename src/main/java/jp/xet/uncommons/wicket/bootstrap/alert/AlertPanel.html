@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" dir="ltr"
+    xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head profile="http://purl.org/net/ns/metaprof">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="index,follow" />
+  <meta http-equiv="content-style-type" content="text/css" />
+  <meta http-equiv="content-script-type" content="text/javascript" />
+  <meta http-equiv="content-language" content="ja" />
+  <title>uncommons-wicket - AlertPanel</title>
+  <link rel="stylesheet" href="../bootstrap.min.css" type="text/css" />
+  <wicket:head>
+    <script type="text/javascript" src="../../jquery/jquery-1.6.4.js"></script>
+    <script type="text/javascript" src="bootstrap-alerts.js"></script>
+  </wicket:head>
+</head>
+<body>
+  <div class="container">
+    <h1>uncommons-wicket - AlertPanel</h1>
+
+    <div>
+      <wicket:panel>
+        <div class="alert-message warning fade in" data-alert="alert">
+          <wicket:enclosure>
+            <a class="close" href="#"><span wicket:id="closeButton">×</span></a>
+          </wicket:enclosure>
+          <p>
+            <strong wicket:id="title">Holy guacamole!</strong> <span wicket:id="body">Lorem ipsum dolor sit amet,
+              consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+              aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+              laborum.</span>
+          </p>
+        </div>
+      </wicket:panel>
+
+      <h2>Lorem ipsum...</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.</p>
+
+    </div>
+
+  </div>
+</body>
+</html>

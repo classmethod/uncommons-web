@@ -25,6 +25,34 @@
     <developerConnection>scm:git:git@github.com:dai0304/uncommons-web.git</developerConnection>
   </scm>
   <build>
+    <resources>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <filtering>false</filtering>
+        <directory>src/test/java</directory>
+        <includes>
+          <include>**</include>
+        </includes>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </testResource>
+    </testResources>
    <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
@@ -104,12 +132,31 @@
       <artifactId>commons-lang</artifactId>
       <version>${commons-lang-version}</version>
     </dependency>
+
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>${commons-io-version}</version>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons-core</artifactId>
+      <version>${spring-data-core-version}</version>
+      <optional>true</optional>
+      <exclusions>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-    
+    <!-- ここから: spring-data-commons-coreが v3.0.5依存なので強制上書き -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>3.1.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>3.1.0.RELEASE</version>
+    </dependency>
+    <!-- ここまで -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
@@ -138,7 +185,57 @@
       <version>3.1.0.RELEASE</version>
     </dependency>
     <!-- ここまで -->
+
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-core</artifactId>
+      <version>${wicket-version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-devutils</artifactId>
+      <version>${wicket-version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-extensions</artifactId>
+      <version>${wicket-version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wicket</groupId>
+      <artifactId>wicket-auth-roles</artifactId>
+      <version>${wicket-version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.jolira</groupId>
+      <artifactId>wicket-stateless</artifactId>
+      <version>1.5.0</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.integration</groupId>
+      <artifactId>spring-integration-mail</artifactId>
+      <version>${spring-integration-version}</version>
+      <optional>true</optional>
+    </dependency>
     
+    <!-- OPTIONAL DEPENDENCIES -->
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>${icu4j-version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>jp.xet</groupId>
+      <artifactId>baseunits</artifactId>
+      <version>${baseunits-version}</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
   <repositories>
     <!-- for browser http://s3browse.springsource.com/browse/maven.springframework.org/ -->
@@ -174,10 +271,16 @@
     </site>
   </distributionManagement>
   <properties>
+    <commons-lang-version>[2.6,3.0)</commons-lang-version>
+    <baseunits-version>2.0-SNAPSHOT</baseunits-version>
     <slf4j-version>[1.6.2,1.7.0)</slf4j-version>
     <logback-version>[0.9.0,0.10.0)</logback-version>
     <spring-version>3.1.0.RELEASE</spring-version>
     <spring-security-version>3.1.0.RELEASE</spring-security-version>
+    <spring-data-core-version>1.1.0.RELEASE</spring-data-core-version>
+    <spring-integration-version>2.1.0.RELEASE</spring-integration-version>
+    <wicket-version>[1.5.0,1.6.0)</wicket-version>
+    <icu4j-version>[4.8.1.1,5.0)</icu4j-version>
     <guava-version>10.0.1</guava-version>
     <commons-lang-version>2.6</commons-lang-version>
     <commons-io-version>2.0.1</commons-io-version>
