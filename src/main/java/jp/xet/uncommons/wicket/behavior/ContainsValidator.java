@@ -53,8 +53,8 @@ public class ContainsValidator<T> extends AbstractValidator<T> {
 	/**
 	 * If set to true then input that matches the pattern is considered invalid.
 	 * 
-	 * @param reverse
-	 * @return itself
+	 * @param reverse {@code true} if invert validation logic
+	 * @return {@code this}
 	 */
 	public ContainsValidator<T> setReverse(boolean reverse) {
 		this.reverse = reverse;

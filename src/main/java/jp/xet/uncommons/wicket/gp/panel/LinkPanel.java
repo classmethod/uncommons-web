@@ -22,6 +22,7 @@ import org.apache.wicket.model.IModel;
 /**
  * TODO for daisuke
  * 
+ * @param <T> 
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -32,7 +33,7 @@ public abstract class LinkPanel<T> extends GenericPanel<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 */
 	protected LinkPanel(String id) {
 		super(id);
@@ -41,12 +42,19 @@ public abstract class LinkPanel<T> extends GenericPanel<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
-	 * @param model
+	 * @param id The non-null id of this component
+	 * @param model The component's model
 	 */
 	protected LinkPanel(String id, IModel<T> model) {
 		super(id, model);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param label
+	 * @return
+	 * @since TODO
+	 */
 	public abstract LinkPanel<T> setBody(IModel<String> label);
 }

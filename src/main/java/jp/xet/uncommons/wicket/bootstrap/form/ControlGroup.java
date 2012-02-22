@@ -28,6 +28,7 @@ import org.apache.wicket.model.IModel;
 /**
  * TODO for daisuke
  * 
+ * @param <T> 
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -38,7 +39,7 @@ public class ControlGroup<T> extends GenericWebMarkupContainer<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 */
 	public ControlGroup(String id) {
 		super(id);
@@ -47,7 +48,7 @@ public class ControlGroup<T> extends GenericWebMarkupContainer<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @param model
 	 */
 	public ControlGroup(String id, IModel<T> model) {

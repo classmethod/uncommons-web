@@ -27,7 +27,7 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.model.IModel;
 
 /**
- * TODO for daisuke
+ * 属性を削除するビヘイビア実装クラス。
  * 
  * @since 1.0
  * @version $Id$
@@ -47,8 +47,8 @@ public class AttributeDeleter extends AttributeModifier {
 	 * Creates an attribute modifier that concatenates the {@code replaceModel} to the attribute's
 	 * current value, optionally separated by the {@link #getSeparator() separator}.
 	 * 
-	 * @param attribute
-	 * @param replaceModel
+	 * @param attribute the attribute to delete the deleteModels value to
+	 * @param replaceModel The model to replace the value with
 	 */
 	public AttributeDeleter(String attribute, IModel<?> replaceModel) {
 		super(attribute, replaceModel);
@@ -58,12 +58,9 @@ public class AttributeDeleter extends AttributeModifier {
 	 * Creates an AttributeModifier that deletes the deleteModel's value to the current value of the
 	 * attribute, and will add the attribute when it is not there already.
 	 * 
-	 * @param attribute
-	 *            the attribute to delete the deleteModels value to
-	 * @param deleteModel
-	 *            the model supplying the value to delete
-	 * @param separator
-	 *            the separator string, comes between the original value and the delete value
+	 * @param attribute the attribute to delete the deleteModels value to
+	 * @param deleteModel the model supplying the value to delete
+	 * @param separator the separator string, comes between the original value and the delete value
 	 */
 	public AttributeDeleter(String attribute, IModel<?> deleteModel, String separator) {
 		super(attribute, deleteModel);
@@ -74,8 +71,8 @@ public class AttributeDeleter extends AttributeModifier {
 	 * Creates an attribute modifier that deletes the {@code value} to the attribute's current
 	 * value, optionally separated by the {@link #getSeparator() separator}.
 	 * 
-	 * @param attribute
-	 * @param value
+	 * @param attribute the attribute to delete the deleteModels value to
+	 * @param value The value for the attribute
 	 */
 	public AttributeDeleter(String attribute, Serializable value) {
 		super(attribute, value);
@@ -106,8 +103,8 @@ public class AttributeDeleter extends AttributeModifier {
 	@Override
 	public String toString() {
 		String attributeModifier = super.toString();
-		attributeModifier = attributeModifier.substring(0, attributeModifier.length() - 2)
-				+ ", separator=" + separator + "]";
+		attributeModifier =
+				attributeModifier.substring(0, attributeModifier.length() - 2) + ", separator=" + separator + "]";
 		return attributeModifier;
 	}
 	

@@ -39,6 +39,7 @@ public class ExactValueValidator<T> extends AbstractValidator<T> {
 	
 	/**
 	 * インスタンスを生成する。
+	 * 
 	 * @param standard 基準
 	 */
 	public ExactValueValidator(T standard) {
@@ -48,8 +49,8 @@ public class ExactValueValidator<T> extends AbstractValidator<T> {
 	/**
 	 * If set to true then input that matches the pattern is considered invalid.
 	 * 
-	 * @param reverse
-	 * @return itself
+	 * @param reverse {@code true} if invert validation logic
+	 * @return {@code this}
 	 */
 	public ExactValueValidator<T> setReverse(boolean reverse) {
 		this.reverse = reverse;

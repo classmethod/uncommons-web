@@ -36,8 +36,8 @@ public class EnumDropDownChoice<T extends Enum<T>> extends DropDownChoice<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id 
-	 * @param model 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
 	 * @param clazz 
 	 */
 	public EnumDropDownChoice(String id, IModel<T> model, Class<T> clazz) {

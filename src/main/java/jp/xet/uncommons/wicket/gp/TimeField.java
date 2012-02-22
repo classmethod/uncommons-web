@@ -65,7 +65,7 @@ public class TimeField extends AutoCompleteTextField<Time> {
 		settings.setShowCompleteListOnFocusGain(true);
 		settings.setShowListOnEmptyInput(true);
 		settings.setShowListOnFocusGain(true);
-		settings.setMaxHeightInPx(160);
+		settings.setMaxHeightInPx(160); // CHECKSTYLE IGNORE THIS LINE
 		settings.setThrottleDelay(0);
 		
 		return settings;
@@ -88,7 +88,7 @@ public class TimeField extends AutoCompleteTextField<Time> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param settings
+	 * @param settings {@link AutoCompleteSettings}
 	 */
 	public TimeField(String id, AutoCompleteSettings settings) {
 		this(id, null, settings);
@@ -109,7 +109,7 @@ public class TimeField extends AutoCompleteTextField<Time> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
-	 * @param settings
+	 * @param settings {@link AutoCompleteSettings}
 	 */
 	public TimeField(String id, IModel<Time> model, AutoCompleteSettings settings) {
 		super(id, model, null, TimeField.AUTO_COMPLETE_TEXT_RENDERER, settings);
@@ -120,9 +120,9 @@ public class TimeField extends AutoCompleteTextField<Time> {
 		Calendar calendar = Calendar.getInstance(Session.get().getLocale());
 		calendar.clear();
 		List<Time> t = Lists.newArrayList();
-		for (int i = 0; i < 48; i++) {
+		for (int i = 0; i < 48; i++) { // CHECKSTYLE IGNORE THIS LINE
 			t.add(new Time(calendar.getTimeInMillis()));
-			calendar.add(Calendar.MINUTE, 30);
+			calendar.add(Calendar.MINUTE, 30); // CHECKSTYLE IGNORE THIS LINE
 		}
 		
 		times = Collections.unmodifiableList(t);

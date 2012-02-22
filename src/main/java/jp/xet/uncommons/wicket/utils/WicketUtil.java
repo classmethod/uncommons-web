@@ -47,14 +47,32 @@ public final class WicketUtil {
 		}
 	}
 	
+	/**
+	 * 現在処理中の{@link HttpServletRequest}を返す。
+	 * 
+	 * @return {@link HttpServletRequest}
+	 * @since 1.0
+	 */
 	public static HttpServletRequest getHttpServletRequest() {
 		RequestCycle requestCycle = RequestCycle.get();
+		if (requestCycle == null) {
+			return null;
+		}
 		Request request = requestCycle.getRequest();
 		return (HttpServletRequest) request.getContainerRequest();
 	}
 	
+	/**
+	 * 現在処理中の{@link HttpServletResponse}を返す。
+	 * 
+	 * @return {@link HttpServletResponse}
+	 * @since 1.0
+	 */
 	public static HttpServletResponse getHttpServletResponse() {
 		RequestCycle requestCycle = RequestCycle.get();
+		if (requestCycle == null) {
+			return null;
+		}
 		Response response = requestCycle.getResponse();
 		return (HttpServletResponse) response.getContainerResponse();
 	}

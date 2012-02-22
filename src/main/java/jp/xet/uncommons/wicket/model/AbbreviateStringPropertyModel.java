@@ -35,9 +35,9 @@ public class AbbreviateStringPropertyModel extends PropertyModel<String> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param modelObject
-	 * @param expression
-	 * @param maxWidth 
+	 * @param modelObject The model object, which may or may not implement IModel
+	 * @param expression Property expression for property access
+	 * @param maxWidth maximum length of string
 	 */
 	public AbbreviateStringPropertyModel(Object modelObject, String expression, int maxWidth) {
 		super(modelObject, expression);

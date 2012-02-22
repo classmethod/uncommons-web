@@ -27,8 +27,9 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 /**
- * TODO for daisuke
+ * 指定したリストモデルの中から、特定の条件を満たす要素のみをフィルタするモデル
  * 
+ * @param <T> モデル要素の型
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -44,8 +45,8 @@ public class FilterModel<T> extends AbstractReadOnlyModel<List<? extends T>> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param delegate 
-	 * @param predicate 
+	 * @param delegate 元のモデル
+	 * @param predicate 抽出条件
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public FilterModel(IModel<List<? extends T>> delegate, Predicate<T> predicate) {

@@ -97,7 +97,7 @@ public class AbbreviateLabel extends Label {
 			
 			@Override
 			public C convertToObject(String value, Locale locale) {
-				return null;
+				throw new UnsupportedOperationException();
 			}
 			
 			@Override

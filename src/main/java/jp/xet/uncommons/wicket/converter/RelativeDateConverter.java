@@ -36,7 +36,7 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
 @SuppressWarnings("serial")
 public class RelativeDateConverter extends AbstractConverter<Date> {
 	
-	private final Component component;
+	private final Component component; // nullable
 	
 	
 	/**
@@ -96,5 +96,4 @@ public class RelativeDateConverter extends AbstractConverter<Date> {
 	protected Class<Date> getTargetType() {
 		return Date.class;
 	}
-	
 }

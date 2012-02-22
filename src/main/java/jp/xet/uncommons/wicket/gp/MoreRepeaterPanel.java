@@ -27,7 +27,7 @@ public final class MoreRepeaterPanel<T> extends Panel {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @param dataProvider {@link IDataProvider}
 	 * @param itemsParPage
 	 * @param pp
@@ -79,6 +79,13 @@ public final class MoreRepeaterPanel<T> extends Panel {
 		container.add(button);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param visible
+	 * @return
+	 * @since TODO
+	 */
 	public MoreRepeaterPanel<T> setRepeatingButtonVisible(boolean visible) {
 		container.setVisible(visible);
 		return this;

@@ -26,6 +26,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 /**
  * TODO for daisuke
  * 
+ * @param <T> 
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -41,7 +42,7 @@ public abstract class SocialLoginFormPanel<T> extends GenericPanel<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 */
 	protected SocialLoginFormPanel(String id) {
 		super(id);
@@ -51,8 +52,8 @@ public abstract class SocialLoginFormPanel<T> extends GenericPanel<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
-	 * @param model
+	 * @param id The non-null id of this component
+	 * @param model The component's model
 	 */
 	protected SocialLoginFormPanel(String id, IModel<T> model) {
 		super(id, model);
@@ -62,7 +63,6 @@ public abstract class SocialLoginFormPanel<T> extends GenericPanel<T> {
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @param id
 	 * @return
 	 * @since 1.0
 	 */
@@ -81,8 +81,19 @@ public abstract class SocialLoginFormPanel<T> extends GenericPanel<T> {
 		}.add(new ImageButton(IMAGE_ID, getButtonImageResource()));
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since TODO
+	 */
 	protected abstract ResourceReference getButtonImageResource();
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @since TODO
+	 */
 	protected abstract void onSubmit();
 	
 	private void commonInit() {

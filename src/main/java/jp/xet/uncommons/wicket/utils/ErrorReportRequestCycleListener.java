@@ -29,6 +29,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
+import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 /**
- * TODO for daisuke
+ * アプリケーション内で処理されない例外が発生した場合に、メールを送信する {@link IRequestCycleListener} 実装クラス。
  * 
  * @since 1.0
  * @version $Id$
@@ -79,6 +80,14 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 		this(mailSender, from, to, DEFAULT_SUBJECT_PATTERN, DEFAULT_ENABLED_ENVIRONMENTS);
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param mailSender {@link MailSender}
+	 * @param from from mail address
+	 * @param to to mail address
+	 * @param subjectPattern メールのタイトルパターン文字列
+	 */
 	public ErrorReportRequestCycleListener(MailSender mailSender, String from, String to, String subjectPattern) {
 		this(mailSender, from, to, subjectPattern, DEFAULT_ENABLED_ENVIRONMENTS);
 	}
@@ -90,6 +99,7 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 	 * @param from from mail address
 	 * @param to to mail address
 	 * @param subjectPattern mail subjectPattern
+	 * @param enabledEnvironments メールを有効にする環境名。全環境を対象にする場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public ErrorReportRequestCycleListener(MailSender mailSender, String from, String to, String subjectPattern,
@@ -102,10 +112,18 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 		this.to = to;
 		this.subjectPattern = subjectPattern;
 		this.mailSender = mailSender;
+		this.enabledEnvironments = enabledEnvironments;
 	}
 	
-	public ErrorReportRequestCycleListener(MailSender mailSender, String from, String to,
-			String[] enabledEnvironments) {
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param mailSender {@link MailSender}
+	 * @param from from mail address
+	 * @param to to mail address
+	 * @param enabledEnvironments メールを有効にする環境名。全環境を対象にする場合は{@code null}
+	 */
+	public ErrorReportRequestCycleListener(MailSender mailSender, String from, String to, String[] enabledEnvironments) {
 		this(mailSender, from, to, DEFAULT_SUBJECT_PATTERN, enabledEnvironments);
 	}
 	
@@ -117,9 +135,7 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 				rootCause = ex;
 			}
 			
-			Properties prop = loadProperties();
-			String environment = prop == null ? null : prop.getProperty("environment");
-			
+			String environment = loadEnvironment();
 			if (enabledEnvironments == null || environment == null
 					|| ArrayUtils.contains(enabledEnvironments, environment)) {
 				String type = rootCause.getClass().getSimpleName();
@@ -149,7 +165,13 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 		return null;
 	}
 	
-	protected Properties loadProperties() {
+	/**
+	 * 環境名を読み出す。
+	 * 
+	 * @return 環境名
+	 * @since 1.0
+	 */
+	protected String loadEnvironment() {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = null;
 		try {
@@ -159,9 +181,9 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 			}
 			Properties properties = new Properties();
 			properties.load(in);
-			return properties;
+			return properties.getProperty("environment");
 		} catch (IOException ex) {
-			return null;
+			return "";
 		} finally {
 			Closeables.closeQuietly(in);
 		}

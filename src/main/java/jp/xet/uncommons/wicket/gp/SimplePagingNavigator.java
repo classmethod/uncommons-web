@@ -40,7 +40,7 @@ public class SimplePagingNavigator extends PagingNavigator {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @param pageable
 	 * @param viewsize
 	 */
@@ -51,7 +51,7 @@ public class SimplePagingNavigator extends PagingNavigator {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @param pageable
 	 * @param viewsize
 	 * @param anchorSelf
@@ -63,10 +63,22 @@ public class SimplePagingNavigator extends PagingNavigator {
 		setAnchorSelf(anchorSelf);
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since TODO
+	 */
 	public int getViewsize() {
 		return viewsize;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since TODO
+	 */
 	public boolean isAnchorSelf() {
 		return anchorSelf;
 	}
@@ -79,10 +91,22 @@ public class SimplePagingNavigator extends PagingNavigator {
 		return true;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param anchorSelf
+	 * @since TODO
+	 */
 	public void setAnchorSelf(boolean anchorSelf) {
 		this.anchorSelf = anchorSelf;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param viewsize
+	 * @since TODO
+	 */
 	public void setViewsize(int viewsize) {
 		this.viewsize = viewsize;
 	}

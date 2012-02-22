@@ -201,7 +201,7 @@ public abstract class StatelessAjaxSubmitLink extends AbstractSubmitLink {
 	/**
 	 * Listener method invoked on form submit with errors
 	 * 
-	 * @param target
+	 * @param target {@link AjaxRequestTarget}
 	 * @param form
 	 */
 	protected abstract void onError(AjaxRequestTarget target, Form<?> form);
@@ -209,7 +209,7 @@ public abstract class StatelessAjaxSubmitLink extends AbstractSubmitLink {
 	/**
 	 * Listener method invoked on form submit
 	 * 
-	 * @param target
+	 * @param target {@link AjaxRequestTarget}
 	 * @param form
 	 */
 	protected abstract void onSubmit(AjaxRequestTarget target, Form<?> form);

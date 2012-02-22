@@ -53,7 +53,7 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	/**
 	 * Constructor
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 */
 	public AjaxLazyLoadPanel2(final String id) {
 		this(id, null);
@@ -62,23 +62,21 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	/**
 	 * Constructor
 	 * 
-	 * @param id
-	 * @param model
+	 * @param id The non-null id of this component
+	 * @param model The component's model
 	 */
 	public AjaxLazyLoadPanel2(final String id, final IModel<?> model) {
 		super(id, model);
 		
 		setOutputMarkupId(true);
 		
-		add(new AbstractDefaultAjaxBehavior()
-		{
+		add(new AbstractDefaultAjaxBehavior() {
 			
 			private static final long serialVersionUID = 1L;
 			
 			
 			@Override
-			public void renderHead(final Component component, final IHeaderResponse response)
-			{
+			public void renderHead(final Component component, final IHeaderResponse response) {
 				super.renderHead(component, response);
 				if (state != RespondState.COMPONENT_REPLACED) {
 					handleCallbackScript(response, getCallbackScript().toString());
@@ -163,10 +161,6 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	protected void onRespond(AjaxRequestTarget target, RespondState state) {
 	}
 	
-	/**
-	 * 
-	 * @param state
-	 */
 	private void setState(final RespondState state) {
 		this.state = state;
 		getPage().dirty();
@@ -174,10 +168,13 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	
 	
 	public enum RespondState {
+		
 		/** add loading component */
 		LOADING_COMPONENT_ADDED,
+		
 		/** loading component added, waiting for ajax replace */
 		WAITING_FOR_AJAX_REPLACE,
+		
 		/** ajax replacement completed */
 		COMPONENT_REPLACED
 	}

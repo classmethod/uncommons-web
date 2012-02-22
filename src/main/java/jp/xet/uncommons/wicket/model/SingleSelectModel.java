@@ -28,6 +28,7 @@ import org.apache.wicket.model.IModel;
 /**
  * TODO for daisuke
  * 
+ * @param <T> モデル要素の型
  * @since 1.0
  * @version $Id$
  * @author daisuke

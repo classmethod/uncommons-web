@@ -29,7 +29,6 @@ import org.apache.wicket.model.IModel;
 @SuppressWarnings("serial")
 public class ExternalLinkPanel extends LinkPanel<Void> {
 	
-	/** TODO for daisuke */
 	private static final String LINK_ID = "link";
 	
 	private ExternalLink externalLink;
@@ -38,7 +37,8 @@ public class ExternalLinkPanel extends LinkPanel<Void> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
+	 * @param href 
 	 */
 	public ExternalLinkPanel(String id, String href) {
 		super(id);

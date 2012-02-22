@@ -18,8 +18,7 @@ package jp.xet.uncommons.wicket.utils;
 
 import java.util.TimeZone;
 
-import org.apache.commons.lang.Validate;
-import org.apache.wicket.Component;
+import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
 
@@ -38,14 +37,12 @@ public final class TimeZoneUtil {
 	 * <p>クライアントのJavaScript環境より、リダイレクトを利用してタイムゾーンを取得する。
 	 * クライアント側でJavaScriptが無効な場合、{@code null}を返すことに注意。</p>
 	 * 
-	 * @param component 
 	 * @return タイムゾーン。取得に失敗した場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0.0
 	 */
-	public static TimeZone getTimeZone(Component component) {
-		Validate.notNull(component);
-		WebClientInfo wci = (WebClientInfo) component.getSession().getClientInfo();
+	public static TimeZone getTimeZone() {
+		WebClientInfo wci = (WebClientInfo) Session.get().getClientInfo();
 		ClientProperties properties = wci.getProperties();
 		TimeZone timeZone = properties.getTimeZone();
 		return timeZone;

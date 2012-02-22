@@ -83,28 +83,52 @@ public class StaticImage extends GenericWebComponent<String> {
 		this(id, Model.of(url), width, height);
 	}
 	
+	/**
+	 * 画像の高さを返す。
+	 * 
+	 * @return 高さ
+	 * @since 1.0
+	 */
 	public int getHeight() {
 		return height;
 	}
 	
+	/**
+	 * 画像の幅を返す。
+	 * 
+	 * @return 幅
+	 * @since 1.0
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * 画像の高さを設定する。
+	 * 
+	 * @param height 高さ
+	 * @since 1.0
+	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * 画像のURLを設定する。
 	 * 
-	 * @param url
+	 * @param url URL
 	 * @since 1.0
 	 */
 	public void setUrl(String url) {
 		setDefaultModelObject(url);
 	}
 	
+	/**
+	 * 画像の幅を設定する。
+	 * 
+	 * @param width 幅
+	 * @since 1.0
+	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}

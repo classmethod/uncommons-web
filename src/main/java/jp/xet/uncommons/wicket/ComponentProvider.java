@@ -21,6 +21,7 @@ import org.apache.wicket.Component;
 /**
  * TODO for daisuke
  * 
+ * @param <T> 
  * @since 1.0
  * @version $Id$
  * @author daisuke

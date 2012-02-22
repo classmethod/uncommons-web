@@ -24,6 +24,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * TODO for daisuke
  * 
+ * @param <T> 
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -31,7 +32,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 @SuppressWarnings("serial")
 public class BookmarkablePageLinkPanel<T> extends LinkPanel<T> {
 	
-	/** TODO for daisuke */
 	private static final String LINK_ID = "link";
 	
 	private BookmarkablePageLink<T> bookmarkablePageLink;
@@ -40,7 +40,9 @@ public class BookmarkablePageLinkPanel<T> extends LinkPanel<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
+	 * @param pageClass 
+	 * @param params 
 	 */
 	public BookmarkablePageLinkPanel(String id, Class<? extends Page> pageClass, PageParameters params) {
 		super(id);
@@ -50,11 +52,12 @@ public class BookmarkablePageLinkPanel<T> extends LinkPanel<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
-	 * @param model
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @param pageClass 
+	 * @param params 
 	 */
-	public BookmarkablePageLinkPanel(String id, IModel<T> model, Class<? extends Page> pageClass,
-			PageParameters params) {
+	public BookmarkablePageLinkPanel(String id, IModel<T> model, Class<? extends Page> pageClass, PageParameters params) {
 		super(id, model);
 		commonInit(pageClass, params);
 	}
