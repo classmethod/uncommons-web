@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
@@ -75,6 +77,24 @@ public final class WicketUtil {
 		}
 		Response response = requestCycle.getResponse();
 		return (HttpServletResponse) response.getContainerResponse();
+	}
+	
+	/**
+	 * 相対URLから絶対URLに変換する。
+	 * 
+	 * @param relativeUrl 相対URL
+	 * @return 絶対URL
+	 * @throws IllegalStateException 現在のスレッドに {@link RequestCycle} が紐づいていない場合
+	 * @since 1.0
+	 */
+	public static String toAbsoluteUrl(String relativeUrl) {
+		RequestCycle requestCycle = RequestCycle.get();
+		if (requestCycle == null) {
+			throw new IllegalStateException();
+		}
+		UrlRenderer urlRenderer = requestCycle.getUrlRenderer();
+		String fullUrl = urlRenderer.renderFullUrl(Url.parse(relativeUrl));
+		return fullUrl;
 	}
 	
 	private WicketUtil() {
