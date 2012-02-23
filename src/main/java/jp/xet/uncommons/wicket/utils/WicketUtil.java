@@ -82,18 +82,22 @@ public final class WicketUtil {
 	/**
 	 * 相対URLから絶対URLに変換する。
 	 * 
-	 * @param relativeUrl 相対URL
+	 * @param url 相対URL
 	 * @return 絶対URL
 	 * @throws IllegalStateException 現在のスレッドに {@link RequestCycle} が紐づいていない場合
 	 * @since 1.0
 	 */
-	public static String toAbsoluteUrl(String relativeUrl) {
+	public static String toAbsoluteUrl(String url) {
+		Url parsed = Url.parse(url);
+		if (parsed.isAbsolute()) {
+			return url;
+		}
 		RequestCycle requestCycle = RequestCycle.get();
 		if (requestCycle == null) {
 			throw new IllegalStateException();
 		}
 		UrlRenderer urlRenderer = requestCycle.getUrlRenderer();
-		String fullUrl = urlRenderer.renderFullUrl(Url.parse(relativeUrl));
+		String fullUrl = urlRenderer.renderFullUrl(parsed);
 		return fullUrl;
 	}
 	

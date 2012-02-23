@@ -49,7 +49,7 @@ public class CanonicalRefBehavior extends Behavior {
 	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<link rel=\"canonical\" href=\"http://");
+		sb.append("<link rel=\"canonical\" href=\"");
 		sb.append(canonicalUrl);
 		sb.append("\"/>");
 		response.renderString(sb.toString());
