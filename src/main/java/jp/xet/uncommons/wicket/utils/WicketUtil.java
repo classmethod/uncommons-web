@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.wicket.model.IDetachable;
+import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.Url;
@@ -88,6 +89,26 @@ public final class WicketUtil {
 	 * @since 1.0
 	 */
 	public static String toAbsoluteUrl(String url) {
+		Url parsed = Url.parse(url);
+		if (parsed.isAbsolute()) {
+			return url;
+		}
+		HttpServletRequest req = getHttpServletRequest();
+		if (req == null) {
+			throw new IllegalStateException();
+		}
+		return RequestUtils.toAbsolutePath(req.getRequestURL().toString(), url);
+	}
+	
+	/**
+	 * 相対URLから絶対URLに変換する。
+	 * 
+	 * @param url 相対URL
+	 * @return 絶対URL
+	 * @throws IllegalStateException 現在のスレッドに {@link RequestCycle} が紐づいていない場合
+	 * @since 1.0
+	 */
+	public static String toAbsoluteUrl0(String url) {
 		Url parsed = Url.parse(url);
 		if (parsed.isAbsolute()) {
 			return url;
