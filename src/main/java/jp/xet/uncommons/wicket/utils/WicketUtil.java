@@ -24,7 +24,6 @@ import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.Url;
-import org.apache.wicket.request.UrlRenderer;
 import org.apache.wicket.request.cycle.RequestCycle;
 
 /**
@@ -98,28 +97,6 @@ public final class WicketUtil {
 			throw new IllegalStateException();
 		}
 		return RequestUtils.toAbsolutePath(req.getRequestURL().toString(), url);
-	}
-	
-	/**
-	 * 相対URLから絶対URLに変換する。
-	 * 
-	 * @param url 相対URL
-	 * @return 絶対URL
-	 * @throws IllegalStateException 現在のスレッドに {@link RequestCycle} が紐づいていない場合
-	 * @since 1.0
-	 */
-	public static String toAbsoluteUrl0(String url) {
-		Url parsed = Url.parse(url);
-		if (parsed.isAbsolute()) {
-			return url;
-		}
-		RequestCycle requestCycle = RequestCycle.get();
-		if (requestCycle == null) {
-			throw new IllegalStateException();
-		}
-		UrlRenderer urlRenderer = requestCycle.getUrlRenderer();
-		String fullUrl = urlRenderer.renderFullUrl(parsed);
-		return fullUrl;
 	}
 	
 	private WicketUtil() {
