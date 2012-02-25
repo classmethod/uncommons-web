@@ -158,7 +158,13 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	
 	@Override
 	protected Link<Void> newPagingNavigationIncrementLink(String id, IPageable pageable, final int increment) {
-		final int page = Integer.valueOf(params.get(paramKey).toString("1"));
+		int p;
+		try {
+			p = Integer.valueOf(params.get(paramKey).toString("1"));
+		} catch (NumberFormatException e) {
+			p = 1;
+		}
+		final int page = p;
 		PageParameters pp = new PageParameters(this.params);
 		pp.set(paramKey, String.valueOf(page + increment + 1));
 		return new BookmarkablePageLink<Void>(id, clazz, pp) {
