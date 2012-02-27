@@ -18,6 +18,7 @@ package jp.xet.uncommons.wicket.behavior;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 /**
@@ -34,19 +35,31 @@ public class JavascriptEventConfirmation extends AttributeModifier {
 	 * インスタンスを生成する。
 	 * 
 	 * @param event イベント名
+	 * @param model 確認メッセージモデル
+	 */
+	public JavascriptEventConfirmation(String event, IModel<?> model) {
+		super(event, model);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param event イベント名
 	 * @param msg 確認メッセージ
 	 */
 	public JavascriptEventConfirmation(String event, String msg) {
-		super(event, new Model<String>(msg));
+		this(event, Model.of(msg));
 	}
 	
 	@Override
 	protected String newValue(final String currentValue, final String replacementValue) {
-		String prefix = "var conf = confirm('" + replacementValue + "'); " + "if (!conf) return false; ";
-		String result = prefix;
+		StringBuilder sb = new StringBuilder();
+		sb.append("var conf = confirm('").append(replacementValue).append("'); ");
+		sb.append("if (!conf) return false; ");
+		
 		if (currentValue != null) {
-			result = prefix + currentValue;
+			sb.append(currentValue);
 		}
-		return result;
+		return sb.toString();
 	}
 }
