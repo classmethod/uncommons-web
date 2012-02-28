@@ -37,6 +37,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 @SuppressWarnings("serial")
 public class StatelessSimplePagingNavigator<T extends Page> extends SimplePagingNavigator {
 	
+	private static final String DEFAULT_PAGE_KEYNAME = "page";
+	
 	private final Class<T> clazz;
 	
 	private final PageParameters params;
@@ -45,7 +47,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	
 	private final int pageCount;
 	
-	private final String paramKey;
+	private final String pageKeyName;
 	
 	private final String anchor;
 	
@@ -61,7 +63,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 */
 	public StatelessSimplePagingNavigator(String id, Class<T> clazz, PageParameters params, IPageable pageable,
 			int viewsize) {
-		this(id, clazz, params, pageable, "page", viewsize, false);
+		this(id, clazz, params, pageable, DEFAULT_PAGE_KEYNAME, viewsize, false);
 	}
 	
 	/**
@@ -71,22 +73,22 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 * @param clazz
 	 * @param params
 	 * @param pageable
-	 * @param paramKey 
+	 * @param pageKeyName 
 	 * @param viewsize
 	 * @param anchorSelf
 	 */
 	public StatelessSimplePagingNavigator(String id, Class<T> clazz, PageParameters params, IPageable pageable,
-			String paramKey, int viewsize, boolean anchorSelf) {
+			String pageKeyName, int viewsize, boolean anchorSelf) {
 		super(id, pageable, viewsize, anchorSelf);
 		Validate.notNull(clazz);
 		Validate.notNull(pageable);
-		Validate.notNull(paramKey);
+		Validate.notNull(pageKeyName);
 		
 		this.clazz = clazz;
 		this.params = params;
 		currentPage = pageable.getCurrentPage();
 		pageCount = pageable.getPageCount();
-		this.paramKey = paramKey;
+		this.pageKeyName = pageKeyName;
 		anchor = null;
 	}
 	
@@ -97,22 +99,22 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 * @param clazz
 	 * @param params
 	 * @param pageable
-	 * @param paramKey 
+	 * @param pageKeyName 
 	 * @param viewsize
 	 * @param anchor
 	 */
 	public StatelessSimplePagingNavigator(String id, Class<T> clazz, PageParameters params, IPageable pageable,
-			String paramKey, int viewsize, String anchor) {
+			String pageKeyName, int viewsize, String anchor) {
 		super(id, pageable, viewsize, false);
 		Validate.notNull(clazz);
 		Validate.notNull(pageable);
-		Validate.notNull(paramKey);
+		Validate.notNull(pageKeyName);
 		
 		this.clazz = clazz;
 		this.params = params;
 		currentPage = pageable.getCurrentPage();
 		pageCount = pageable.getPageCount();
-		this.paramKey = paramKey;
+		this.pageKeyName = pageKeyName;
 		this.anchor = anchor;
 	}
 	
@@ -128,7 +130,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 			@Override
 			protected Link<Void> newPagingNavigationLink(String id, IPageable pageable, final int pageIndex) {
 				PageParameters pp = new PageParameters(StatelessSimplePagingNavigator.this.params);
-				pp.set(paramKey, String.valueOf(pageIndex + 1));
+				pp.set(pageKeyName, String.valueOf(pageIndex + 1));
 				BookmarkablePageLink<Void> lnk = new BookmarkablePageLink<Void>(id, clazz, pp) {
 					
 					@Override
@@ -160,13 +162,13 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	protected Link<Void> newPagingNavigationIncrementLink(String id, IPageable pageable, final int increment) {
 		int p;
 		try {
-			p = Integer.valueOf(params.get(paramKey).toString("1"));
+			p = Integer.valueOf(params.get(pageKeyName).toString("1"));
 		} catch (NumberFormatException e) {
 			p = 1;
 		}
 		final int page = p;
 		PageParameters pp = new PageParameters(this.params);
-		pp.set(paramKey, String.valueOf(page + increment + 1));
+		pp.set(pageKeyName, String.valueOf(page + increment + 1));
 		return new BookmarkablePageLink<Void>(id, clazz, pp) {
 			
 			@Override
@@ -179,7 +181,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	@Override
 	protected Link<Void> newPagingNavigationLink(String id, IPageable pageable, int pageNumber) {
 		PageParameters pp = new PageParameters(this.params);
-		pp.set(paramKey, String.valueOf(pageNumber + 1));
+		pp.set(pageKeyName, String.valueOf(pageNumber + 1));
 		return new BookmarkablePageLink<Void>(id, clazz, pp);
 	}
 	
@@ -193,7 +195,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 */
 	protected Link<Void> newStatelessPagingNavigationLink(String id, final int increment) {
 		PageParameters pp = new PageParameters(this.params);
-		pp.set(paramKey, String.valueOf(currentPage + increment + 1));
+		pp.set(pageKeyName, String.valueOf(currentPage + increment + 1));
 		return new BookmarkablePageLink<Void>(id, clazz, pp) {
 			
 			@Override
