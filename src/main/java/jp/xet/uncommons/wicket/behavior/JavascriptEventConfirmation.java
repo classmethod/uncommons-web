@@ -17,12 +17,17 @@
 package jp.xet.uncommons.wicket.behavior;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 /**
  * {@link Button}等に対するクリック等のタイミングで、Javascriptによる確認を行うビヘイビア実装クラス。
+ * 
+ * <p>{@link AjaxLink}には<a href=
+ * "http://apache-wicket.1842946.n4.nabble.com/AttributeModifier-and-AjaxLink-in-1-5-td3830027.html">利用できない</a
+ * >ので注意のこと。</p>
  * 
  * @since 1.0.0
  * @version $Id: JavascriptEventConfirmation.java 115 2011-10-07 01:10:56Z daisuke $
