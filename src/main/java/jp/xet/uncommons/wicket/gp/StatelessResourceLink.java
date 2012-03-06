@@ -68,7 +68,7 @@ public class StatelessResourceLink<T extends Serializable> extends ResourceLink<
 	}
 	
 	@Override
-	protected boolean getStatelessHint() {
+	protected final boolean getStatelessHint() {
 		return true;
 	}
 }
