@@ -53,6 +53,8 @@ public class AbbreviateLabel extends Label {
 	private int maxWidth;
 	
 	
+	// TODO いらなくなってくる AbbreviateStringModel使う
+	
 	/**
 	 * インスタンスを生成する。
 	 * 

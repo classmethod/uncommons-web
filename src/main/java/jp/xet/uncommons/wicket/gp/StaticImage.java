@@ -17,6 +17,7 @@
 package jp.xet.uncommons.wicket.gp;
 
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
@@ -28,7 +29,7 @@ import org.apache.wicket.model.Model;
  * @author daisuke
  */
 @SuppressWarnings("serial")
-public class StaticImage extends GenericWebComponent<String> {
+public class StaticImage extends WebComponent {
 	
 	private static final int NOT_SPECIFIED = -1;
 	
@@ -36,6 +37,15 @@ public class StaticImage extends GenericWebComponent<String> {
 	
 	private int height;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id component id
+	 */
+	public StaticImage(String id) {
+		this(id, NOT_SPECIFIED, NOT_SPECIFIED);
+	}
 	
 	/**
 	 * インスタンスを生成する。
@@ -57,6 +67,19 @@ public class StaticImage extends GenericWebComponent<String> {
 	 */
 	public StaticImage(String id, IModel<String> model, int width, int height) {
 		super(id, model);
+		this.width = width;
+		this.height = height;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id component id
+	 * @param width 幅
+	 * @param height 高さ
+	 */
+	public StaticImage(String id, int width, int height) {
+		super(id);
 		this.width = width;
 		this.height = height;
 	}
