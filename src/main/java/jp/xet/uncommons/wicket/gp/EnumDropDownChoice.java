@@ -20,12 +20,13 @@ import java.util.Arrays;
 
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
 /**
  * TODO for daisuke
  * 
- * @param <T> 
+ * @param <T> type of enum
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -37,10 +38,43 @@ public class EnumDropDownChoice<T extends Enum<T>> extends DropDownChoice<T> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
+	 * @param clazz {@link Enum} class
+	 */
+	public EnumDropDownChoice(String id, Class<T> clazz) {
+		super(id, Arrays.asList(clazz.getEnumConstants()), new EnumChoiceRenderer<T>());
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param clazz {@link Enum} class
+	 * @param renderer {@link IChoiceRenderer} implementation
+	 */
+	public EnumDropDownChoice(String id, Class<T> clazz, IChoiceRenderer<? super T> renderer) {
+		super(id, Arrays.asList(clazz.getEnumConstants()), renderer);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
 	 * @param model The component's model
-	 * @param clazz 
+	 * @param clazz {@link Enum} class
 	 */
 	public EnumDropDownChoice(String id, IModel<T> model, Class<T> clazz) {
 		super(id, model, Arrays.asList(clazz.getEnumConstants()), new EnumChoiceRenderer<T>());
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @param clazz {@link Enum} class
+	 * @param renderer {@link IChoiceRenderer} implementation
+	 */
+	public EnumDropDownChoice(String id, IModel<T> model, Class<T> clazz, IChoiceRenderer<? super T> renderer) {
+		super(id, model, Arrays.asList(clazz.getEnumConstants()), renderer);
 	}
 }
