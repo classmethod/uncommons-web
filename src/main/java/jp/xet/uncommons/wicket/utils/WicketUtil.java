@@ -80,6 +80,17 @@ public final class WicketUtil {
 	}
 	
 	/**
+	 * enum値に対するWicket通例のリソースキー名を返す。
+	 * 
+	 * @param e enum
+	 * @return リソースキー
+	 * @since 1.0
+	 */
+	public static String resourceKey(Enum<?> e) {
+		return e == null ? null : e.getClass().getSimpleName() + "." + e.name();
+	}
+	
+	/**
 	 * 相対URLから絶対URLに変換する。
 	 * 
 	 * @param url 相対URL

@@ -27,6 +27,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.protocol.http.PageExpiredException;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
@@ -129,6 +130,10 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 	
 	@Override
 	public IRequestHandler onException(RequestCycle cycle, Exception ex) {
+		if (ex instanceof PageExpiredException) {
+			return null;
+		}
+		
 		if (ex instanceof WicketRuntimeException) {
 			Throwable rootCause = ExceptionUtils.getRootCause(ex);
 			if (rootCause == null) {
