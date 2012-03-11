@@ -16,10 +16,14 @@
  */
 package jp.xet.uncommons.wicket.behavior;
 
+import com.google.common.base.Strings;
+
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 /**
  * TODO for daisuke
@@ -32,8 +36,19 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 @SuppressWarnings("serial")
 public class CanonicalRefBehavior extends Behavior {
 	
-	private final String canonicalUrl;
+	private final IModel<String> canonicalUrlModel;
 	
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param canonicalUrlModel hrefモデル
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public CanonicalRefBehavior(IModel<String> canonicalUrlModel) {
+		Validate.notNull(canonicalUrlModel);
+		this.canonicalUrlModel = canonicalUrlModel;
+	}
 	
 	/**
 	 * インスタンスを生成する。
@@ -42,16 +57,18 @@ public class CanonicalRefBehavior extends Behavior {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public CanonicalRefBehavior(String canonicalUrl) {
-		Validate.notNull(canonicalUrl);
-		this.canonicalUrl = canonicalUrl;
+		this(Model.of(canonicalUrl));
 	}
 	
 	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("<link rel=\"canonical\" href=\"");
-		sb.append(canonicalUrl);
-		sb.append("\"/>");
-		response.renderString(sb.toString());
+		String canonicalUrl = canonicalUrlModel.getObject();
+		if (Strings.isNullOrEmpty(canonicalUrl) == false) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("<link rel=\"canonical\" href=\"");
+			sb.append(canonicalUrl);
+			sb.append("\"/>");
+			response.renderString(sb.toString());
+		}
 	}
 }
