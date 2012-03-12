@@ -32,6 +32,7 @@ import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.mapper.StalePageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.MailException;
@@ -130,7 +131,7 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 	
 	@Override
 	public IRequestHandler onException(RequestCycle cycle, Exception ex) {
-		if (ex instanceof PageExpiredException) {
+		if (ex instanceof PageExpiredException || ex instanceof StalePageException) {
 			return null;
 		}
 		
