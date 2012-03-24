@@ -48,7 +48,8 @@ public class FocusOnLoadBehavior extends Behavior {
 	public void renderHead(Component component, IHeaderResponse response) {
 		component.setOutputMarkupId(true);
 		
-		String js = String.format("document.getElementById('%s').focus();", component.getMarkupId());
+		// last semicolon is not required
+		String js = String.format("document.getElementById('%s').focus()", component.getMarkupId());
 		response.renderOnLoadJavaScript(js);
 	}
 }
