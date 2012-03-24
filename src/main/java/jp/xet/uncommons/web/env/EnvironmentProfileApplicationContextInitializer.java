@@ -28,7 +28,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 /**
  * TODO for daisuke
  * 
- * @since 1.0.0
+ * @since 1.1
  * @version $Id$
  * @author daisuke
  */

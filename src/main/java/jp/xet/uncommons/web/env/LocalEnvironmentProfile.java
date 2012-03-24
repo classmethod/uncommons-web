@@ -21,7 +21,7 @@ import org.apache.commons.lang.Validate;
 /**
  * TODO for daisuke
  * 
- * @since TODO for daisuke
+ * @since 1.1
  * @version $Id$
  * @author daisuke
  */

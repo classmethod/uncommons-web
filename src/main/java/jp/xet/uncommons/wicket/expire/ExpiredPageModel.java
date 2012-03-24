@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * }
  * </pre></code>
  * 
- * @since 1.0.0
+ * @since 1.1
  * @version $Id: ExpiredPageModel.java 4314 2012-03-24 05:29:46Z miyamoto $
  * @author daisuke
  */

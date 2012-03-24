@@ -162,7 +162,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 * TODO for daisuke
 	 * 
 	 * @return
-	 * @since TODO
+	 * @since 1.0
 	 */
 	protected PageParameters newPageParameters() {
 		PageParameters pp = new PageParameters(this.params);

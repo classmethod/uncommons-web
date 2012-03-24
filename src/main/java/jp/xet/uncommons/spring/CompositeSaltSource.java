@@ -27,7 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * <p>複数の{@link SaltSource}からsaltを生成し、 {@link Object#toString() toString()}で文字列化したものを
  * {@code separator}で指定した文字列を間に挟んで接続する。</p>
  * 
- * @since 1.0.0
+ * @since 1.1
  * @version $Id: CompositeSaltSource.java 201 2012-02-04 00:42:19Z daisuke $
  * @author daisuke
  */
