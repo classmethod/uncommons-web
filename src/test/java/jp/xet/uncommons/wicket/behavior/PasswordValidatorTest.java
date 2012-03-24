@@ -1,8 +1,18 @@
 /*
- * Copyright 2011 Cloudstudy, Inc..
+ * Copyright 2012 Daisuke Miyamoto.
  * Created on 2012/01/19
- * 
- * All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.xet.uncommons.wicket.behavior;
 
@@ -16,6 +26,13 @@ import org.junit.Test;
  * @author daisuke
  */
 public class PasswordValidatorTest extends AbstractValidatorTest {
+	
+	@Test
+	public void testDanger() {
+		PasswordValidator validator = new PasswordValidator();
+		assertValid(validator, "123456", false);
+		assertValid(validator, "john", false);
+	}
 	
 	@Test
 	public void testLength() {
@@ -38,12 +55,5 @@ public class PasswordValidatorTest extends AbstractValidatorTest {
 		assertValid(validator, "barbaz", false);
 		assertValid(validator, "barbazqux", true);
 		assertValid(validator, "foobarbazqux", true);
-	}
-	
-	@Test
-	public void testDanger() {
-		PasswordValidator validator = new PasswordValidator();
-		assertValid(validator, "123456", false);
-		assertValid(validator, "john", false);
 	}
 }
