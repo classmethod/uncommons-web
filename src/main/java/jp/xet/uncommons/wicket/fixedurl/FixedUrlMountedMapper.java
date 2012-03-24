@@ -15,9 +15,14 @@
  */
 package jp.xet.uncommons.wicket.fixedurl;
 
+import java.util.List;
+
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.resolver.AutoLinkResolver;
+import org.apache.wicket.markup.resolver.AutoLinkResolver.IAutolinkResolverDelegate;
+import org.apache.wicket.markup.resolver.IComponentResolver;
 import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
@@ -29,6 +34,7 @@ import org.apache.wicket.request.mapper.info.PageComponentInfo;
 import org.apache.wicket.request.mapper.info.PageInfo;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.settings.IPageSettings;
 import org.apache.wicket.util.ClassProvider;
 
 /**
@@ -38,8 +44,28 @@ import org.apache.wicket.util.ClassProvider;
  */
 public class FixedUrlMountedMapper extends MountedMapper {
 	
-	private static final String KEY_RELOAD = "reload";
+	static final String KEY_RELOAD = "reload";
 	
+	
+	/**
+	 * {@link FixedUrlMountedMapper}用に、aタグでの自動リンクに ?reload を自動付与する処理を追加する。
+	 * 
+	 * @param pageSettings {@link IPageSettings}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.2
+	 */
+	public static void initialize(IPageSettings pageSettings) {
+		Validate.notNull(pageSettings);
+		List<IComponentResolver> resolvers = pageSettings.getComponentResolvers();
+		for (IComponentResolver resolver : resolvers) {
+			if (resolver instanceof AutoLinkResolver) {
+				AutoLinkResolver autoLinkResolver = (AutoLinkResolver) resolver;
+				IAutolinkResolverDelegate delegateForAElement = autoLinkResolver.getAutolinkResolverDelegate("a");
+				IAutolinkResolverDelegate newDelegate = new ForceReloadAutolinkResolverDelegate(delegateForAElement);
+				autoLinkResolver.addTagReferenceResolver("a", "href", newDelegate);
+			}
+		}
+	}
 	
 	/**
 	 * TODO for daisuke
@@ -62,7 +88,9 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	 */
 	public static PageParameters updateReloadParameter(PageParameters params) {
 		Validate.notNull(params);
-		params.add(KEY_RELOAD, "");
+		if (params.getNamedKeys().contains(KEY_RELOAD) == false) {
+			params.add(KEY_RELOAD, "");
+		}
 		return params;
 	}
 	
