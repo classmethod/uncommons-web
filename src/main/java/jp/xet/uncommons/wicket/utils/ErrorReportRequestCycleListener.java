@@ -21,6 +21,9 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Properties;
 
+import jp.xet.uncommons.web.env.EnvironmentProfile;
+import jp.xet.uncommons.web.env.RemoteEnvironmentProfile;
+
 import com.google.common.io.Closeables;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -35,6 +38,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.StalePageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -46,7 +51,7 @@ import org.springframework.mail.SimpleMailMessage;
  * @version $Id$
  * @author daisuke
  */
-public class ErrorReportRequestCycleListener extends AbstractRequestCycleListener {
+public class ErrorReportRequestCycleListener extends AbstractRequestCycleListener implements EnvironmentAware {
 	
 	private static Logger logger = LoggerFactory.getLogger(ErrorReportRequestCycleListener.class);
 	
@@ -68,6 +73,8 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 	private String subjectPattern;
 	
 	private String[] enabledEnvironments;
+	
+	private Environment environment;
 	
 	
 	/**
@@ -171,6 +178,11 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 		return null;
 	}
 	
+	@Override
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
+	}
+	
 	/**
 	 * 環境名を読み出す。
 	 * 
@@ -178,6 +190,11 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 	 * @since 1.0
 	 */
 	protected String loadEnvironment() {
+		if (environment != null) {
+			EnvironmentProfile profile = RemoteEnvironmentProfile.toEnvironmentProfile(environment.getActiveProfiles());
+			return profile.toString();
+		}
+		
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		InputStream in = null;
 		try {
