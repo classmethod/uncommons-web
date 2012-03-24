@@ -18,10 +18,13 @@ package jp.xet.uncommons.wicket.gp;
 
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.http.flow.AbortWithHttpErrorCodeException;
 
 /**
  * TODO for daisuke
@@ -76,5 +79,23 @@ public class EnumDropDownChoice<T extends Enum<T>> extends DropDownChoice<T> {
 	 */
 	public EnumDropDownChoice(String id, IModel<T> model, Class<T> clazz, IChoiceRenderer<? super T> renderer) {
 		super(id, model, Arrays.asList(clazz.getEnumConstants()), renderer);
+	}
+	
+	@Override
+	protected T convertChoiceIdToChoice(String id) {
+		T visibility = super.convertChoiceIdToChoice(id);
+		if (isNullValid() == false && visibility == null) {
+			onInvalidNull();
+		}
+		return visibility;
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @since 1.1
+	 */
+	protected void onInvalidNull() {
+		throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_BAD_REQUEST);
 	}
 }
