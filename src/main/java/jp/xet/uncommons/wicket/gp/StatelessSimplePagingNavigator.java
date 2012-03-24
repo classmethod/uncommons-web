@@ -129,7 +129,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 			
 			@Override
 			protected Link<Void> newPagingNavigationLink(String id, IPageable pageable, final int pageIndex) {
-				PageParameters pp = new PageParameters(StatelessSimplePagingNavigator.this.params);
+				PageParameters pp = newPageParameters();
 				pp.set(pageKeyName, String.valueOf(pageIndex + 1));
 				BookmarkablePageLink<Void> lnk = new BookmarkablePageLink<Void>(id, clazz, pp) {
 					
@@ -158,6 +158,17 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 		return pn;
 	}
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @return
+	 * @since TODO
+	 */
+	protected PageParameters newPageParameters() {
+		PageParameters pp = new PageParameters(this.params);
+		return pp;
+	}
+	
 	@Override
 	protected Link<Void> newPagingNavigationIncrementLink(String id, IPageable pageable, final int increment) {
 		int p;
@@ -167,7 +178,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 			p = 1;
 		}
 		final int page = p;
-		PageParameters pp = new PageParameters(this.params);
+		PageParameters pp = newPageParameters();
 		pp.set(pageKeyName, String.valueOf(page + increment + 1));
 		return new BookmarkablePageLink<Void>(id, clazz, pp) {
 			
@@ -180,7 +191,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	
 	@Override
 	protected Link<Void> newPagingNavigationLink(String id, IPageable pageable, int pageNumber) {
-		PageParameters pp = new PageParameters(this.params);
+		PageParameters pp = newPageParameters();
 		pp.set(pageKeyName, String.valueOf(pageNumber + 1));
 		return new BookmarkablePageLink<Void>(id, clazz, pp);
 	}
@@ -194,7 +205,7 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 * @since 1.0
 	 */
 	protected Link<Void> newStatelessPagingNavigationLink(String id, final int increment) {
-		PageParameters pp = new PageParameters(this.params);
+		PageParameters pp = newPageParameters();
 		pp.set(pageKeyName, String.valueOf(currentPage + increment + 1));
 		return new BookmarkablePageLink<Void>(id, clazz, pp) {
 			
