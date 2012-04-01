@@ -1,8 +1,18 @@
 /*
- * Copyright 2011-2012 Cloudstudy, Inc..
+ * Copyright 2012 Daisuke Miyamoto.
  * Created on 2012/03/25
- * 
- * All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.xet.uncommons.wicket.fixedurl;
 
@@ -16,8 +26,6 @@ import org.apache.wicket.request.mapper.HomePageMapper;
 import org.apache.wicket.request.mapper.ICompoundRequestMapper;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.util.ClassProvider;
-
-import jp.xet.uncommons.wicket.fixedurl.FixedUrlMountedMapper;
 
 /**
  * TODO for daisuke
@@ -55,6 +63,15 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	 * インスタンスを生成する。
 	 * 
 	 * @param pageClass
+	 */
+	public FixedUrlHomePageMapper(Class<? extends IRequestablePage> pageClass) {
+		super("/", pageClass);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param pageClass
 	 * @param pageParametersEncoder
 	 */
 	public FixedUrlHomePageMapper(Class<? extends IRequestablePage> pageClass,
@@ -65,10 +82,10 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param pageClass
+	 * @param pageClassProvider
 	 */
-	public FixedUrlHomePageMapper(Class<? extends IRequestablePage> pageClass) {
-		super("/", pageClass);
+	public FixedUrlHomePageMapper(ClassProvider<? extends IRequestablePage> pageClassProvider) {
+		super("/", pageClassProvider);
 	}
 	
 	/**
@@ -83,12 +100,13 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	}
 	
 	/**
-	 * インスタンスを生成する。
+	 * Use this mapper as a last option. Let all other mappers to try to handle the request
 	 * 
-	 * @param pageClassProvider
+	 * @see org.apache.wicket.request.mapper.MountedMapper#getCompatibilityScore(org.apache.wicket.request.Request)
 	 */
-	public FixedUrlHomePageMapper(ClassProvider<? extends IRequestablePage> pageClassProvider) {
-		super("/", pageClassProvider);
+	@Override
+	public int getCompatibilityScore(Request request) {
+		return Integer.MIN_VALUE + 1;
 	}
 	
 	/**
@@ -107,15 +125,5 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 		}
 		
 		return super.parseRequest(request);
-	}
-	
-	/**
-	 * Use this mapper as a last option. Let all other mappers to try to handle the request
-	 * 
-	 * @see org.apache.wicket.request.mapper.MountedMapper#getCompatibilityScore(org.apache.wicket.request.Request)
-	 */
-	@Override
-	public int getCompatibilityScore(Request request) {
-		return Integer.MIN_VALUE + 1;
 	}
 }

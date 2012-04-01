@@ -91,7 +91,7 @@ public abstract class AbstractSpringDataProvider<T extends Serializable> impleme
 	
 	@Override
 	public Iterator<? extends T> iterator(int first, int count) {
-		Pageable request = new PageRequest(getPage(first, itemsPerPage), itemsPerPage);
+		Pageable request = newPageable(first, count);
 		Page<T> page = find(request);
 		List<T> content = page.getContent();
 		if (content.size() > count) {
@@ -119,6 +119,10 @@ public abstract class AbstractSpringDataProvider<T extends Serializable> impleme
 	 * @return total item count
 	 */
 	protected abstract long internalGetItemCount();
+	
+	protected Pageable newPageable(int first, int count) {
+		return new PageRequest(getPage(first, itemsPerPage), itemsPerPage);
+	}
 	
 	private void clearCachedItemCount() {
 		cachedItemCount = -1;
