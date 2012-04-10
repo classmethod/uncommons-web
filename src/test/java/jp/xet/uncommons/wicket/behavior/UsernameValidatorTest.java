@@ -47,9 +47,6 @@ public class UsernameValidatorTest extends AbstractValidatorTest {
 		assertValid(validator, "test", false);
 		assertValid(validator, "test12", false);
 		
-		// testに関しては頭でなければOK
-		assertValid(validator, "contest", true);
-		
 		// 小文字のみOK、大文字はNG、数字はOK、_.-はOK
 		assertValid(validator, "abcdefg", true);
 		assertValid(validator, "Abcdefg", false);
