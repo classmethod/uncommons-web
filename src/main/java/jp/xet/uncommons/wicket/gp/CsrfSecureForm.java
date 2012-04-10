@@ -21,6 +21,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.ClassUtils;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.form.Form;
@@ -34,7 +35,8 @@ import org.slf4j.LoggerFactory;
 /**
  * CSRF対策フォーム。
  * 
- * @since 1.0.0
+ * @param <T> The model object type
+ * @since 1.2
  * @version $Id: CsrfSecureForm.java 4573 2012-03-29 09:48:16Z miyamoto $
  * @author daisuke
  */
@@ -55,29 +57,33 @@ public class CsrfSecureForm<T> extends Form<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
+	 * @since 1.2
 	 */
 	public CsrfSecureForm(String id) {
 		super(id);
+		logger.trace("construct.");
 		initCsrfToken();
 	}
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
-	 * @param model
+	 * @param id The non-null id of this component
+	 * @param model The component's model
+	 * @since 1.2
 	 */
 	public CsrfSecureForm(String id, IModel<T> model) {
 		super(id, model);
+		logger.trace("construct.");
 		initCsrfToken();
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * CSRFトークンを返す。
 	 * 
-	 * @return 
-	 * @since 1.0.0
+	 * @return CSRFトークン
+	 * @since 1.2
 	 */
 	public String getCsrfToken() {
 		return csrfToken;
@@ -94,10 +100,10 @@ public class CsrfSecureForm<T> extends Form<T> {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * テスト用にCSRFトークンチェックをパスするかどうかを設定する。
 	 * 
-	 * @param ignoreKeyForTest
-	 * @since 1.0.0
+	 * @param ignoreKeyForTest トークンチェックをパスする場合は{@code true}、そうでない場合は{@code false}
+	 * @since 1.2
 	 */
 	public void setIgnoreKeyForTest(boolean ignoreKeyForTest) {
 		this.ignoreKeyForTest = ignoreKeyForTest;
@@ -108,6 +114,14 @@ public class CsrfSecureForm<T> extends Form<T> {
 		super.onValidate();
 		IRequestParameters params = getRequest().getRequestParameters();
 		String actualKey = params.getParameterValue(INPUT_NAME).toString();
+		
+		logger.trace("CSRF checking {}:{} - actual = {}, expected = {}", new Object[] {
+			getPage().getClass().getName(),
+			getPageRelativePath(),
+			actualKey,
+			csrfToken
+		});
+		
 		if (ignoreKeyForTest == false && Objects.equal(actualKey, csrfToken) == false) {
 			logger.warn("CSRF detected in {}:{} - actual = {}, expected = {}", new Object[] {
 				getPage().getClass().getName(),
@@ -116,12 +130,14 @@ public class CsrfSecureForm<T> extends Form<T> {
 				csrfToken
 			});
 			throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_BAD_REQUEST);
-//		} else {
-//			initCsrfToken();
+		} else {
+			logger.debug("submit successfully.");
+			initCsrfToken();
 		}
 	}
 	
 	private void initCsrfToken() {
 		csrfToken = String.valueOf(RAND.nextLong());
+		logger.trace("new CSRF token for {}: {}", ClassUtils.getShortClassName(getClass()), csrfToken);
 	}
 }
