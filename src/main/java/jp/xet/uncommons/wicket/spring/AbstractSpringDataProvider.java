@@ -116,10 +116,28 @@ public abstract class AbstractSpringDataProvider<T extends Serializable> impleme
 	}
 	
 	/**
+	 * 1ページあたりのアイテム数を返す。
+	 * 
+	 * @return 1ページあたりのアイテム数
+	 * @since 1.2
+	 */
+	protected int getItemsPerPage() {
+		return itemsPerPage;
+	}
+	
+	/**
 	 * @return total item count
 	 */
 	protected abstract long internalGetItemCount();
 	
+	/**
+	 * {@link Pageable}を生成する。
+	 * 
+	 * @param first 必要なアイテム群の先頭のインデックス
+	 * @param count 必要なアイテム数
+	 * @return 生成した{@link Pageable}
+	 * @since 1.2
+	 */
 	protected Pageable newPageable(int first, int count) {
 		return new PageRequest(getPage(first, itemsPerPage), itemsPerPage);
 	}
