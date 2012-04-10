@@ -35,6 +35,12 @@ import org.apache.wicket.util.string.AppendingStringBuffer;
 @SuppressWarnings("serial")
 public abstract class StatelessAjaxSubmitLink extends AbstractSubmitLink {
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id
+	 * @param form
+	 */
 	public StatelessAjaxSubmitLink(String id, Form<?> form) {
 		super(id, form);
 		add(new StatelessAjaxFormSubmitBehavior(form, "onclick") {
