@@ -49,7 +49,7 @@ public class EmailTextFieldPanel extends FormComponentPanel<String, EmailTextFie
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
-	 * @param emailValidator 
+	 * @param emailValidator the validator that will check the correctness of the input value
 	 */
 	public EmailTextFieldPanel(String id, IModel<String> model, IValidator<String> emailValidator) {
 		super(id, model);

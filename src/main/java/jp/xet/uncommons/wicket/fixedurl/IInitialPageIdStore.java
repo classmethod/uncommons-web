@@ -57,9 +57,9 @@ public interface IInitialPageIdStore {
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @param pageClass
-	 * @param parameters
-	 * @return
+	 * @param pageClass class of bookmarkable page
+	 * @param parameters bookmarkable page parameters
+	 * @return initial page ID or {@code null} if none found.
 	 * @since 1.1
 	 */
 	Integer getInitialId(Class<? extends Page> pageClass, PageParameters parameters);
@@ -67,10 +67,10 @@ public interface IInitialPageIdStore {
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @param pageClass
-	 * @param parameters
-	 * @param id
-	 * @return
+	 * @param pageClass class of bookmarkable page
+	 * @param parameters bookmarkable page parameters
+	 * @param id new page ID
+	 * @return old page ID or {@code null} if none found.
 	 * @since 1.1
 	 */
 	Integer putInitialId(Class<? extends Page> pageClass, PageParameters parameters, Integer id);
@@ -78,9 +78,9 @@ public interface IInitialPageIdStore {
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @param pageClass
-	 * @param parameters
-	 * @return
+	 * @param pageClass class of bookmarkable page
+	 * @param parameters bookmarkable page parameters
+	 * @return removed page ID or {@code null} if none found.
 	 * @since 1.1
 	 */
 	Integer removeInitialId(Class<? extends Page> pageClass, PageParameters parameters);

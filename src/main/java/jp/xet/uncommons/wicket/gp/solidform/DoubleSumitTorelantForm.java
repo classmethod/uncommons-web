@@ -62,6 +62,10 @@ public abstract class DoubleSumitTorelantForm<T> extends Form<T> {
 		super(id, model);
 	}
 	
+	protected FormKey getKey() {
+		return key;
+	}
+	
 	/**
 	 * このフォームが属するページのIDを返す。
 	 * 
@@ -96,24 +100,20 @@ public abstract class DoubleSumitTorelantForm<T> extends Form<T> {
 		throw new AbortWithHttpErrorCodeException(HttpServletResponse.SC_BAD_REQUEST);
 	}
 	
-	/**
-	 * Implemented by subclasses to deal with single form submits.
-	 * 
-	 * @since 1.3
-	 */
-	protected abstract void onSingleSubmit();
-	
 	@Override
 	protected final void onSubmit() {
 		logger.trace("onSubmit");
+	}
+	
+	@Override
+	protected void onValidate() {
+		super.onValidate();
 		Session session = getSession();
 		if (session instanceof DoubleSumitTorelantFormKeyContainer) {
 			DoubleSumitTorelantFormKeyContainer solidFormSession = (DoubleSumitTorelantFormKeyContainer) session;
 			
 			if (solidFormSession.removeFormKey(key) == false) {
 				onDoubleSubmit();
-			} else {
-				onSingleSubmit();
 			}
 		} else {
 			logger.warn("session must implement DoubleSumitTorelantFormKeyContainer");

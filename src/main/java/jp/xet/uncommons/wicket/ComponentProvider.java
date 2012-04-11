@@ -31,7 +31,7 @@ public interface ComponentProvider<T extends Component> {
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @return
 	 * @since 1.0
 	 */

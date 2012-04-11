@@ -24,7 +24,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * TODO for daisuke
  * 
- * @param <T> 
+ * @param <T> The Model type.
  * @since 1.0
  * @version $Id: RequestParameterDataView.java 4540 2012-03-29 05:20:55Z miyamoto $
  * @author daisuke
@@ -43,17 +43,6 @@ public abstract class RequestParameterDataView<T> extends DataView<T> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param dataProvider data provider
-	 * @param itemsPerPage items per page
-	 */
-	public RequestParameterDataView(String id, IDataProvider<T> dataProvider, int itemsPerPage) {
-		this(id, dataProvider, itemsPerPage, DEFAULT_PARAM_KEY_PAGE);
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param id The non-null id of this component
-	 * @param dataProvider data provider
 	 */
 	public RequestParameterDataView(String id, IDataProvider<T> dataProvider) {
 		this(id, dataProvider, DEFAULT_PARAM_KEY_PAGE);
@@ -64,11 +53,10 @@ public abstract class RequestParameterDataView<T> extends DataView<T> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param dataProvider data provider
-	 * @param paramKey 
+	 * @param itemsPerPage items per page
 	 */
-	public RequestParameterDataView(String id, IDataProvider<T> dataProvider, String paramKey) {
-		super(id, dataProvider);
-		this.paramKey = paramKey;
+	public RequestParameterDataView(String id, IDataProvider<T> dataProvider, int itemsPerPage) {
+		this(id, dataProvider, itemsPerPage, DEFAULT_PARAM_KEY_PAGE);
 	}
 	
 	/**
@@ -84,10 +72,16 @@ public abstract class RequestParameterDataView<T> extends DataView<T> {
 		this.paramKey = paramKey;
 	}
 	
-	@Override
-	protected void onConfigure() {
-		super.onConfigure();
-		setCurrentPage(paramKey);
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param dataProvider data provider
+	 * @param paramKey 
+	 */
+	public RequestParameterDataView(String id, IDataProvider<T> dataProvider, String paramKey) {
+		super(id, dataProvider);
+		this.paramKey = paramKey;
 	}
 	
 	/**
@@ -100,10 +94,15 @@ public abstract class RequestParameterDataView<T> extends DataView<T> {
 		return paramKey;
 	}
 	
+	@Override
+	protected void onConfigure() {
+		super.onConfigure();
+		setCurrentPage(paramKey);
+	}
+	
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @param params
 	 * @param paramKey
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.0

@@ -24,6 +24,7 @@ import org.apache.wicket.markup.resolver.AutoLinkResolver;
 import org.apache.wicket.markup.resolver.AutoLinkResolver.IAutolinkResolverDelegate;
 import org.apache.wicket.markup.resolver.IComponentResolver;
 import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.component.IRequestablePage;
@@ -38,7 +39,8 @@ import org.apache.wicket.settings.IPageSettings;
 import org.apache.wicket.util.ClassProvider;
 
 /**
- *
+ * {@link IRequestMapper} implementation for Fixed URL strategy.
+ * 
  * @author Tsutomu YANO
  * @since 1.1
  */
@@ -68,9 +70,9 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * Create new {@link PageParameters} with reload parameter.
 	 * 
-	 * @return 
+	 * @return new parameter
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
@@ -79,10 +81,10 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * Add reload parameter to given {@link PageParameters}.
 	 * 
-	 * @param params 
-	 * @return 
+	 * @param params parameters to be added
+	 * @return {@code params}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.1
 	 */
@@ -97,7 +99,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param mountPath
+	 * @param mountPath mount path
 	 * @param pageClass
 	 * @since 1.1
 	 */
@@ -108,7 +110,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param mountPath
+	 * @param mountPath mount path
 	 * @param pageClass
 	 * @param pageParametersEncoder
 	 * @since 1.1
@@ -121,7 +123,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param mountPath
+	 * @param mountPath mount path
 	 * @param pageClassProvider
 	 * @since 1.1
 	 */
@@ -132,7 +134,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param mountPath
+	 * @param mountPath mount path
 	 * @param pageClassProvider
 	 * @param pageParametersEncoder
 	 * @since 1.1
@@ -276,7 +278,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	 * 
 	 * @param pageClass
 	 * @param params
-	 * @param pageId
+	 * @param pageId page ID
 	 * @return
 	 * @since 1.1
 	 */

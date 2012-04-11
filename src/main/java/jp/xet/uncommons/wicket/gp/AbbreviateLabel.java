@@ -18,6 +18,8 @@ package jp.xet.uncommons.wicket.gp;
 
 import java.util.Locale;
 
+import jp.xet.uncommons.wicket.model.AbbreviateStringModel;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.basic.Label;
@@ -46,14 +48,14 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
  * @version $Id$
  * @author daisuke
  * @see StringUtils#abbreviate(String, int)
+ * @deprecated use {@link AbbreviateStringModel}
  */
+@Deprecated
 @SuppressWarnings("serial")
 public class AbbreviateLabel extends Label {
 	
 	private int maxWidth;
 	
-	
-	// TODO いらなくなってくる AbbreviateStringModel使う
 	
 	/**
 	 * インスタンスを生成する。
@@ -84,7 +86,7 @@ public class AbbreviateLabel extends Label {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param label
+	 * @param label label string
 	 * @param maxWidth  maximum length of result String, must be at least 4
 	 */
 	public AbbreviateLabel(String id, String label, int maxWidth) {

@@ -31,7 +31,7 @@ public class InitialPageStorePageProvider extends PageProvider {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param pageClass
+	 * @param pageClass class of bookmarkable page
 	 * @since 1.1
 	 */
 	public InitialPageStorePageProvider(Class<? extends IRequestablePage> pageClass) {
@@ -41,8 +41,8 @@ public class InitialPageStorePageProvider extends PageProvider {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param pageClass
-	 * @param pageParameters
+	 * @param pageClass class of bookmarkable page
+	 * @param pageParameters bookmarkable page parameters
 	 * @since 1.1
 	 */
 	public InitialPageStorePageProvider(Class<? extends IRequestablePage> pageClass, PageParameters pageParameters) {
@@ -52,9 +52,9 @@ public class InitialPageStorePageProvider extends PageProvider {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param pageId
-	 * @param pageClass
-	 * @param renderCount
+	 * @param pageId page ID
+	 * @param pageClass class of bookmarkable page
+	 * @param renderCount render count
 	 * @since 1.1
 	 */
 	public InitialPageStorePageProvider(int pageId, Class<? extends IRequestablePage> pageClass, Integer renderCount) {
@@ -64,10 +64,10 @@ public class InitialPageStorePageProvider extends PageProvider {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param pageId
-	 * @param pageClass
-	 * @param pageParameters
-	 * @param renderCount
+	 * @param pageId page ID
+	 * @param pageClass class of bookmarkable page
+	 * @param pageParameters bookmarkable page parameters
+	 * @param renderCount render count
 	 * @since 1.1
 	 */
 	public InitialPageStorePageProvider(int pageId, Class<? extends IRequestablePage> pageClass,
@@ -78,8 +78,8 @@ public class InitialPageStorePageProvider extends PageProvider {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param pageId
-	 * @param renderCount
+	 * @param pageId page ID
+	 * @param renderCount render count
 	 * @since 1.1
 	 */
 	public InitialPageStorePageProvider(int pageId, Integer renderCount) {
@@ -89,7 +89,7 @@ public class InitialPageStorePageProvider extends PageProvider {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param page
+	 * @param page page instance
 	 * @since 1.1
 	 */
 	public InitialPageStorePageProvider(IRequestablePage page) {

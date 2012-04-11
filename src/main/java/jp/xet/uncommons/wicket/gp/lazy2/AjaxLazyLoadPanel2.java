@@ -55,7 +55,7 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	 * 
 	 * @param id The non-null id of this component
 	 */
-	public AjaxLazyLoadPanel2(final String id) {
+	public AjaxLazyLoadPanel2(String id) {
 		this(id, null);
 	}
 	
@@ -65,7 +65,7 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	 * @param id The non-null id of this component
 	 * @param model The component's model
 	 */
-	public AjaxLazyLoadPanel2(final String id, final IModel<?> model) {
+	public AjaxLazyLoadPanel2(String id, IModel<?> model) {
 		super(id, model);
 		
 		setOutputMarkupId(true);
@@ -116,7 +116,7 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	 *            The components markupid.
 	 * @return The component to show while the real component is being created.
 	 */
-	public Component getLoadingComponent(final String markupId) {
+	public Component getLoadingComponent(String markupId) {
 		IRequestHandler handler = new ResourceReferenceRequestHandler(AbstractDefaultAjaxBehavior.INDICATOR);
 		return new Label(markupId, "<img alt=\"Loading...\" src=\"" + RequestCycle.get().urlFor(handler) + "\"/>")
 			.setEscapeModelStrings(false);
@@ -125,7 +125,7 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @return
+	 * @return {@code null}
 	 * @since 1.0
 	 */
 	protected AjaxChannel getChannel() {
@@ -135,10 +135,10 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	/**
 	 * Allows subclasses to change the callback script if needed.
 	 * 
-	 * @param response
-	 * @param callbackScript
+	 * @param response {@link IHeaderResponse}
+	 * @param callbackScript callback srcipt
 	 */
-	protected void handleCallbackScript(final IHeaderResponse response, final String callbackScript) {
+	protected void handleCallbackScript(IHeaderResponse response, String callbackScript) {
 		response.renderOnDomReadyJavaScript(callbackScript);
 	}
 	
@@ -154,8 +154,8 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	/**
 	 * TODO for daisuke
 	 * 
-	 * @param target
-	 * @param state
+	 * @param target {@link AjaxRequestTarget}
+	 * @param state {@link RespondState}
 	 * @since 1.0
 	 */
 	protected void onRespond(AjaxRequestTarget target, RespondState state) {

@@ -22,7 +22,7 @@ import org.apache.wicket.model.IModel;
 /**
  * TODO for daisuke
  * 
- * @param <T> 
+ * @param <T> the type of the panel's model object
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -50,11 +50,11 @@ public abstract class LinkPanel<T> extends GenericPanel<T> {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * Sets the link's body model.
 	 * 
-	 * @param label
-	 * @return
-	 * @since TODO
+	 * @param bodyModel body model to be set
+	 * @return {@code this} for method chaining
+	 * @since 1.0
 	 */
-	public abstract LinkPanel<T> setBody(IModel<String> label);
+	public abstract LinkPanel<T> setBody(IModel<String> bodyModel);
 }

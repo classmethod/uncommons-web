@@ -25,6 +25,7 @@ import org.junit.Test;
  * @version $Id: PasswordValidatorTest.java 2297 2012-01-19 06:41:23Z miyamoto $
  * @author daisuke
  */
+@SuppressWarnings("javadoc")
 public class PasswordValidatorTest extends AbstractValidatorTest {
 	
 	@Test

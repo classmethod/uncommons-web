@@ -24,7 +24,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * TODO for daisuke
  * 
- * @param <T> 
+ * @param <T> the type of the panel's model object
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -41,8 +41,8 @@ public class BookmarkablePageLinkPanel<T> extends LinkPanel<T> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param pageClass 
-	 * @param params 
+	 * @param pageClass The class of page to link to
+	 * @param params The parameters to pass to the new page when the link is clicked
 	 */
 	public BookmarkablePageLinkPanel(String id, Class<? extends Page> pageClass, PageParameters params) {
 		super(id);
@@ -54,24 +54,17 @@ public class BookmarkablePageLinkPanel<T> extends LinkPanel<T> {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param model The component's model
-	 * @param pageClass 
-	 * @param params 
+	 * @param pageClass The class of page to link to
+	 * @param params The parameters to pass to the new page when the link is clicked
 	 */
 	public BookmarkablePageLinkPanel(String id, IModel<T> model, Class<? extends Page> pageClass, PageParameters params) {
 		super(id, model);
 		commonInit(pageClass, params);
 	}
 	
-	/**
-	 * TODO for daisuke
-	 * 
-	 * @param label
-	 * @return
-	 * @since 1.0
-	 */
 	@Override
-	public BookmarkablePageLinkPanel<T> setBody(IModel<String> label) {
-		bookmarkablePageLink.setBody(label);
+	public BookmarkablePageLinkPanel<T> setBody(IModel<String> bodyModel) {
+		bookmarkablePageLink.setBody(bodyModel);
 		return this;
 	}
 	

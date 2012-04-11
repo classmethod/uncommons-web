@@ -49,7 +49,7 @@ public class ControlGroup<T> extends GenericWebMarkupContainer<T> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param model
+	 * @param model The component's model
 	 */
 	public ControlGroup(String id, IModel<T> model) {
 		super(id, model);

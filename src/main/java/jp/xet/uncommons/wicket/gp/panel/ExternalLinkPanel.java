@@ -38,23 +38,16 @@ public class ExternalLinkPanel extends LinkPanel<Void> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param href 
+	 * @param href the href attribute to set
 	 */
 	public ExternalLinkPanel(String id, String href) {
 		super(id);
 		commonInit(href);
 	}
 	
-	/**
-	 * TODO for daisuke
-	 * 
-	 * @param label
-	 * @return
-	 * @since 1.0
-	 */
 	@Override
-	public ExternalLinkPanel setBody(IModel<String> label) {
-		externalLink.setBody(label);
+	public ExternalLinkPanel setBody(IModel<String> bodyModel) {
+		externalLink.setBody(bodyModel);
 		return this;
 	}
 	

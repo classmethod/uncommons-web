@@ -16,6 +16,8 @@
  */
 package jp.xet.uncommons.wicket.paging;
 
+import jp.xet.uncommons.wicket.gp.SimplePagingNavigator;
+
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.ComponentTag;
@@ -26,8 +28,6 @@ import org.apache.wicket.markup.html.navigation.paging.IPagingLabelProvider;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigation;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-
-import jp.xet.uncommons.wicket.gp.SimplePagingNavigator;
 
 /**
  * TODO for daisuke
@@ -56,7 +56,6 @@ public class RequestParameterPagingNavigator<T extends Page> extends SimplePagin
 	 * 
 	 * @param id The non-null id of this component
 	 * @param clazz
-	 * @param params
 	 * @param pageable
 	 * @param viewsize
 	 */
@@ -69,7 +68,6 @@ public class RequestParameterPagingNavigator<T extends Page> extends SimplePagin
 	 * 
 	 * @param id The non-null id of this component
 	 * @param clazz
-	 * @param params
 	 * @param pageable
 	 * @param pageKeyName 
 	 * @param viewsize
@@ -93,7 +91,6 @@ public class RequestParameterPagingNavigator<T extends Page> extends SimplePagin
 	 * 
 	 * @param id The non-null id of this component
 	 * @param clazz
-	 * @param params
 	 * @param pageable
 	 * @param pageKeyName 
 	 * @param viewsize
@@ -173,15 +170,6 @@ public class RequestParameterPagingNavigator<T extends Page> extends SimplePagin
 		};
 	}
 	
-	private int parsePageNumber(IRequestParameters requestParameters) {
-		try {
-			return Integer.valueOf(requestParameters.getParameterValue(pageKeyName).toString("1"));
-		} catch (NumberFormatException e) {
-			// ignore
-		}
-		return 1;
-	}
-	
 	@Override
 	protected Link<Void> newPagingNavigationLink(String id, IPageable pageable, int pageNumber) {
 		PageParameters pp = newPageParameters();
@@ -216,5 +204,14 @@ public class RequestParameterPagingNavigator<T extends Page> extends SimplePagin
 		super.onBeforeRender();
 		addOrReplace(newStatelessPagingNavigationLink("next", 1));
 		addOrReplace(newStatelessPagingNavigationLink("prev", -1));
+	}
+	
+	private int parsePageNumber(IRequestParameters requestParameters) {
+		try {
+			return Integer.valueOf(requestParameters.getParameterValue(pageKeyName).toString("1"));
+		} catch (NumberFormatException e) {
+			// ignore
+		}
+		return 1;
 	}
 }

@@ -25,7 +25,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * TODO for daisuke
  * 
- * @since TODO for daisuke
+ * @param <T> type of model object
+ * @since 1.2
  * @version $Id$
  * @author daisuke
  */
@@ -50,11 +51,24 @@ public class ConfigurableBookmarkablePageLink<T> extends Link<T> {
 		this(id, pageClass, null);
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The name of this component
+	 * @param pageClass The class of page to link to
+	 * @param parameters The parameters to pass to the new page when the link is clicked
+	 */
 	public <C extends Page> ConfigurableBookmarkablePageLink(String id, Class<? extends Page> pageClass,
 			PageParameters parameters) {
 		this(id, new Model<Class<? extends Page>>(pageClass), parameters);
 	}
 	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The name of this component
+	 * @param pageClassModel model of the class of page to link to
+	 */
 	public <C extends Page> ConfigurableBookmarkablePageLink(String id, IModel<Class<? extends Page>> pageClassModel) {
 		this(id, pageClassModel, null);
 	}

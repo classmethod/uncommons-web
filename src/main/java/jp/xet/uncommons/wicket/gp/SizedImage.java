@@ -23,6 +23,7 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * TODO for daisuke
@@ -76,7 +77,7 @@ public class SizedImage extends Image {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param resourceReference  The image resource reference
+	 * @param resourceReference The image resource reference
 	 * @param width 幅
 	 * @param height 高さ
 	 */
@@ -88,7 +89,7 @@ public class SizedImage extends Image {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param resourceReference  The image resource reference
+	 * @param resourceReference The image resource reference
 	 * @param width 幅
 	 * @param height 高さ
 	 * @param alt alt属性文字列
@@ -106,8 +107,8 @@ public class SizedImage extends Image {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param resourceReference  The image resource reference
-	 * @param resourceParameters
+	 * @param resourceReference The image resource reference
+	 * @param resourceParameters The resource parameters
 	 * @param width 幅
 	 * @param height 高さ
 	 */
@@ -120,8 +121,8 @@ public class SizedImage extends Image {
 	 * インスタンスを生成する。
 	 * 
 	 * @param id The non-null id of this component
-	 * @param resourceReference  The image resource reference
-	 * @param resourceParameters
+	 * @param resourceReference The image resource reference
+	 * @param resourceParameters The resource parameters
 	 * @param width 幅
 	 * @param height 高さ
 	 * @param alt alt属性文字列
@@ -143,8 +144,9 @@ public class SizedImage extends Image {
 		tag.put("width", width);
 		tag.put("height", height);
 		if (StringUtils.isEmpty(alt) == false) {
-			tag.put("alt", alt);
-			tag.put("title", alt);
+			CharSequence escapedAlt = Strings.escapeMarkup(alt);
+			tag.put("alt", escapedAlt);
+			tag.put("title", escapedAlt);
 		}
 	}
 }

@@ -22,9 +22,9 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * TODO for daisuke
+ * SUによる認証トークン。
  * 
- * @since TODO for daisuke
+ * @since 1.2
  * @version $Id$
  * @author daisuke
  */
@@ -37,8 +37,8 @@ public class SuperUserAuthenticationToken extends AbstractAuthenticationToken {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param principal 
-	 * @param authorities
+	 * @param principal ユーザ
+	 * @param authorities 権限
 	 */
 	public SuperUserAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);

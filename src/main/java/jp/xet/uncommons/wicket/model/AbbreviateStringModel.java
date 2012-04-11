@@ -23,7 +23,7 @@ import org.apache.wicket.model.IModel;
 /**
  * TODO for daisuke
  * 
- * @since TODO for daisuke
+ * @since 1.2
  * @version $Id$
  * @author daisuke
  */
@@ -38,7 +38,8 @@ public class AbbreviateStringModel extends AbstractReadOnlyModel<String> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * TODO あとで使う
+	 * @param source 元の文字列モデル
+	 * @param maxWidth 最大長
 	 */
 	public AbbreviateStringModel(IModel<String> source, int maxWidth) {
 		this.source = source;

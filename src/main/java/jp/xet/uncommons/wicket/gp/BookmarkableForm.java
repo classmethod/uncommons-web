@@ -23,7 +23,7 @@ import org.apache.wicket.markup.html.form.Form;
 /**
  * TODO for daisuke
  * 
- * @param <T> 
+ * @param <T> The model object type
  * @since 1.0
  * @version $Id$
  * @author daisuke
@@ -37,7 +37,7 @@ public class BookmarkableForm<T> extends Form<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 */
 	public BookmarkableForm(String id) {
 		this(id, "");
@@ -46,7 +46,7 @@ public class BookmarkableForm<T> extends Form<T> {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @param actionPath
 	 */
 	public BookmarkableForm(String id, String actionPath) {
