@@ -24,7 +24,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 /**
  * TODO for daisuke
  * 
- * @param <T> 
+ * @param <T> The Model type.
  * @since 1.0
  * @version $Id$
  * @author daisuke

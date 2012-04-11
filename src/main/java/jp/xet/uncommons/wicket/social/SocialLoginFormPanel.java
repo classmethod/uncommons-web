@@ -26,7 +26,7 @@ import org.apache.wicket.request.resource.ResourceReference;
 /**
  * TODO for daisuke
  * 
- * @param <T> 
+ * @param <T> the type of the panel's model object
  * @since 1.0
  * @version $Id$
  * @author daisuke

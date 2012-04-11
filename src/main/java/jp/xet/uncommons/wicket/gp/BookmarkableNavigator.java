@@ -44,7 +44,7 @@ public class BookmarkableNavigator extends PagingNavigator {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @param pageable
 	 */
 	public BookmarkableNavigator(String id, IPageable pageable) {
@@ -54,7 +54,7 @@ public class BookmarkableNavigator extends PagingNavigator {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param id
+	 * @param id The non-null id of this component
 	 * @param pageable
 	 * @param pageKeyName
 	 */
