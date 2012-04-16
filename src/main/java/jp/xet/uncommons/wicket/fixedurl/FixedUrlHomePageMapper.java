@@ -16,8 +16,14 @@
  */
 package jp.xet.uncommons.wicket.fixedurl;
 
+import java.util.List;
+
+import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
+import org.apache.wicket.markup.resolver.AutoLinkResolver;
+import org.apache.wicket.markup.resolver.AutoLinkResolver.IAutolinkResolverDelegate;
+import org.apache.wicket.markup.resolver.IComponentResolver;
 import org.apache.wicket.request.IRequestMapper;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
@@ -30,12 +36,19 @@ import org.apache.wicket.util.ClassProvider;
 /**
  * TODO for daisuke
  * 
- * @since 1.0.0
+ * @since 1.2
  * @version $Id$
  * @author daisuke
  */
 public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @param application {@link Application}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.2
+	 */
 	public static void replaceHomePageMapper(final Application application) {
 		ICompoundRequestMapper mappers = application.getRootRequestMapperAsCompound();
 		IRequestMapper homePageMapper = null;
@@ -57,6 +70,26 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 				return homePage;
 			}
 		}));
+	}
+	
+	/**
+	 * FixedUrlMountedMapper用に、aタグでの自動リンクに ?reload を自動付与する
+	 * 
+	 * @param application {@link Application}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.5
+	 */
+	public static void wrapAutoLinkResolver(final Application application) {
+		Validate.notNull(application);
+		List<IComponentResolver> resolvers = application.getPageSettings().getComponentResolvers();
+		for (IComponentResolver resolver : resolvers) {
+			if (resolver instanceof AutoLinkResolver) {
+				AutoLinkResolver autoLinkResolver = (AutoLinkResolver) resolver;
+				IAutolinkResolverDelegate delegateForAElement = autoLinkResolver.getAutolinkResolverDelegate("a");
+				IAutolinkResolverDelegate newDelegate = new ForceReloadAutolinkResolverDelegate(delegateForAElement);
+				autoLinkResolver.addTagReferenceResolver("a", "href", newDelegate);
+			}
+		}
 	}
 	
 	/**
