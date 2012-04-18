@@ -42,8 +42,8 @@ public class GroupingAndFilteringHeaderResponse extends DecoratingHeaderResponse
 	 * Uses {@link JavaScriptFilteredIntoFooterHeaderResponse} for rendering all JavaScript
 	 * resources and {@link GroupingHeaderResponse} for all CSS resources
 	 * 
-	 * @param groupingHeaderResponse
-	 * @param filteredIntoFooterHeaderResponse
+	 * @param groupingHeaderResponse {@link GroupingHeaderResponse}
+	 * @param filteredIntoFooterHeaderResponse {@link JavaScriptFilteredIntoFooterHeaderResponse}
 	 */
 	public GroupingAndFilteringHeaderResponse(GroupingHeaderResponse groupingHeaderResponse,
 			JavaScriptFilteredIntoFooterHeaderResponse filteredIntoFooterHeaderResponse) {
