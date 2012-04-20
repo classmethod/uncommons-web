@@ -4,10 +4,10 @@
 <wicket:panel>
   var _gaq = _gaq || [];
 
-  _gaq.push(['_setAccount', '<wicket:container wicket:id="accountName"></wicket:container>']);
-  _gaq.push(['_setDomainName', '<wicket:container wicket:id="domainName"></wicket:container>']);
+  <wicket:enclosure child="accountName">_gaq.push(['_setAccount', '<wicket:container wicket:id="accountName">UA-XXXXXXX-X</wicket:container>']);</wicket:enclosure>
+  <wicket:enclosure child="domainName">_gaq.push(['_setDomainName', '<wicket:container wicket:id="domainName">example.com</wicket:container>']);</wicket:enclosure>
   _gaq.push(['_setAllowLinker', true]);
-  _gaq.push(['_trackPageview', '<wicket:container wicket:id="trackingUrl"></wicket:container>']);
+  <wicket:enclosure child="trackingUrl">_gaq.push(['_trackPageview', '<wicket:container wicket:id="trackingUrl">/foo</wicket:container>']);</wicket:enclosure>
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

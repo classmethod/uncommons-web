@@ -20,6 +20,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.GenericPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Generates javascript for google analytics asynchronous (new) tracking code. The model is the url that is reported to
@@ -42,13 +43,45 @@ public class GoogleAnalyticsScriptPanel extends GenericPanel<String> {
 	 * @param accountNameModel Model of tracking ID
 	 * @param domainNameModel Model of domain name
 	 */
-	public GoogleAnalyticsScriptPanel(String id, IModel<String> urlModel, IModel<String> accountNameModel,
-			IModel<String> domainNameModel) {
+	public GoogleAnalyticsScriptPanel(String id, final IModel<String> urlModel, final IModel<String> accountNameModel,
+			final IModel<String> domainNameModel) {
 		super(id, urlModel);
-		add(new Label("accountName", accountNameModel).setRenderBodyOnly(true));
-		add(new Label("trackingUrl", urlModel).setRenderBodyOnly(true));
-		add(new Label("domainName", domainNameModel).setRenderBodyOnly(true));
-		
+		add(new Label("accountName", accountNameModel) {
+			
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				if (accountNameModel == null) {
+					setVisibilityAllowed(false);
+				} else {
+					setVisibilityAllowed(Strings.isEmpty(accountNameModel.getObject()) == false);
+				}
+			}
+		}.setRenderBodyOnly(true));
+		add(new Label("trackingUrl", urlModel) {
+			
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				if (urlModel == null) {
+					setVisibilityAllowed(false);
+				} else {
+					setVisibilityAllowed(Strings.isEmpty(urlModel.getObject()) == false);
+				}
+			}
+		}.setRenderBodyOnly(true));
+		add(new Label("domainName", domainNameModel) {
+			
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				if (domainNameModel == null) {
+					setVisibilityAllowed(false);
+				} else {
+					setVisibilityAllowed(Strings.isEmpty(domainNameModel.getObject()) == false);
+				}
+			}
+		}.setRenderBodyOnly(true));
 	}
 	
 	/**
@@ -70,6 +103,17 @@ public class GoogleAnalyticsScriptPanel extends GenericPanel<String> {
 	 */
 	public GoogleAnalyticsScriptPanel(String id, String domainName) {
 		this(id, (IModel<String>) null, (IModel<String>) null, Model.of(domainName));
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param id The non-null id of this component
+	 * @param account tracking ID
+	 * @param domainName domain name
+	 */
+	public GoogleAnalyticsScriptPanel(String id, String account, String domainName) {
+		this(id, (IModel<String>) null, Model.of(account), Model.of(domainName));
 	}
 	
 	/**
