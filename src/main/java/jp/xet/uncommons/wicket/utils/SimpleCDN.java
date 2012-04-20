@@ -60,7 +60,7 @@ import org.apache.wicket.util.string.Strings;
  * <em>For those familiar with Ruby on Rails, {@code SimpleCDN} is inspired by the Rails
  * {@code action_controller.asset_host} configuration setting.</em>
  *
- * @since 3.2
+ * @since 1.5
  */
 public class SimpleCDN implements IRequestMapper {
 	
@@ -79,6 +79,15 @@ public class SimpleCDN implements IRequestMapper {
 	 */
 	public SimpleCDN(String baseUrl) {
 		this.baseUrl = baseUrl;
+	}
+	
+	/**
+	 * Always return {@code 0}, since {@code SimpleCDN} does not play any part in handling requests
+	 * (they will be handled by Wicket's default mechanism).
+	 */
+	@Override
+	public int getCompatibilityScore(Request request) {
+		return 0;
 	}
 	
 	/**
@@ -132,14 +141,5 @@ public class SimpleCDN implements IRequestMapper {
 	@Override
 	public IRequestHandler mapRequest(Request request) {
 		return null;
-	}
-	
-	/**
-	 * Always return {@code 0}, since {@code SimpleCDN} does not play any part in handling requests
-	 * (they will be handled by Wicket's default mechanism).
-	 */
-	@Override
-	public int getCompatibilityScore(Request request) {
-		return 0;
 	}
 }

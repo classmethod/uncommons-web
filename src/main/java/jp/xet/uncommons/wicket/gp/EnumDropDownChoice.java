@@ -87,11 +87,11 @@ public class EnumDropDownChoice<T extends Enum<T>> extends DropDownChoice<T> {
 	
 	@Override
 	protected T convertChoiceIdToChoice(String id) {
-		T visibility = super.convertChoiceIdToChoice(id);
-		if (isNullValid() == false && visibility == null) {
+		T choice = super.convertChoiceIdToChoice(id);
+		if (isNullValid() == false && choice == null) {
 			onInvalidNull();
 		}
-		return visibility;
+		return choice;
 	}
 	
 	/**

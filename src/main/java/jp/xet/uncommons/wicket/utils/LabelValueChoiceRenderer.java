@@ -47,11 +47,10 @@ public class LabelValueChoiceRenderer<T> implements IChoiceRenderer<T> {
 	 * @param value 値
 	 * @param displayValue 表示値（ラベル）
 	 * @return {@code this}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code displayValue}に{@code null}を与えた場合
 	 * @since 1.0.0
 	 */
 	public LabelValueChoiceRenderer<T> addValue(T value, String displayValue) {
-		Validate.notNull(value);
 		Validate.notNull(displayValue);
 		this.values.add(value);
 		this.displayValues.put(value, displayValue);
