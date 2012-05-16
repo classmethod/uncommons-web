@@ -139,7 +139,7 @@ public abstract class AbstractSpringDataProvider<T extends Serializable> impleme
 	 * @since 1.2
 	 */
 	protected Pageable newPageable(int first, int count) {
-		return new PageRequest(getPage(first, itemsPerPage), itemsPerPage);
+		return new PageRequest(getPage(first, getItemsPerPage()), getItemsPerPage());
 	}
 	
 	private void clearCachedItemCount() {
