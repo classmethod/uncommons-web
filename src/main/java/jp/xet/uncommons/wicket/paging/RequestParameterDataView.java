@@ -110,19 +110,21 @@ public abstract class RequestParameterDataView<T> extends DataView<T> {
 	protected void setCurrentPage(String paramKey) {
 		Validate.notNull(paramKey);
 		
-		String pageNumberStr = getRequest().getRequestParameters().getParameterValue(paramKey).toString("1");
+		String pageNumberStr = getRequest().getRequestParameters().getParameterValue(paramKey).toString();
+		if (pageNumberStr == null) {
+			return;
+		}
 		if (pageNumberStr.contains(".wicket-")) {
 			pageNumberStr = pageNumberStr.substring(0, pageNumberStr.indexOf(".wicket-"));
 		}
 		
-		int pageNumber = 0;
 		try {
-			pageNumber = Integer.valueOf(pageNumberStr);
+			int pageNumber = Integer.valueOf(pageNumberStr);
+			if (0 < pageNumber && pageNumber <= getPageCount()) {
+				setCurrentPage(pageNumber - 1);
+			}
 		} catch (NumberFormatException e) {
 			// ignore
-		}
-		if (0 < pageNumber && pageNumber <= getPageCount()) {
-			setCurrentPage(pageNumber - 1);
 		}
 	}
 }

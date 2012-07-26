@@ -50,6 +50,7 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	 * @since 1.2
 	 */
 	public static void replaceHomePageMapper(final Application application) {
+		Validate.notNull(application);
 		ICompoundRequestMapper mappers = application.getRootRequestMapperAsCompound();
 		IRequestMapper homePageMapper = null;
 		for (IRequestMapper mapper : mappers) {
@@ -78,7 +79,9 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	 * @param application {@link Application}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.5
+	 * @deprecated use {@link FixedUrlMountedMapper#initialize(org.apache.wicket.settings.IPageSettings)}
 	 */
+	@Deprecated
 	public static void wrapAutoLinkResolver(final Application application) {
 		Validate.notNull(application);
 		List<IComponentResolver> resolvers = application.getPageSettings().getComponentResolvers();

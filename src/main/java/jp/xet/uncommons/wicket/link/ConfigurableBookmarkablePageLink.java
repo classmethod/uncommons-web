@@ -37,7 +37,7 @@ public class ConfigurableBookmarkablePageLink<T> extends Link<T> {
 	private final IModel<Class<? extends Page>> pageClassModel;
 	
 	/** The parameters to pass to the class constructor when instantiated. */
-	protected PageParameters parameters;
+	private final IModel<PageParameters> parametersModel;
 	
 	
 	/**
@@ -48,7 +48,7 @@ public class ConfigurableBookmarkablePageLink<T> extends Link<T> {
 	 * @param pageClass The class of page to link to
 	 */
 	public <C extends Page> ConfigurableBookmarkablePageLink(String id, Class<? extends Page> pageClass) {
-		this(id, pageClass, null);
+		this(id, pageClass, (PageParameters) null);
 	}
 	
 	/**
@@ -64,13 +64,29 @@ public class ConfigurableBookmarkablePageLink<T> extends Link<T> {
 	}
 	
 	/**
-	 * インスタンスを生成する。
+	 * Constructor.
 	 * 
 	 * @param id The name of this component
 	 * @param pageClassModel model of the class of page to link to
 	 */
 	public <C extends Page> ConfigurableBookmarkablePageLink(String id, IModel<Class<? extends Page>> pageClassModel) {
-		this(id, pageClassModel, null);
+		this(id, pageClassModel, (PageParameters) null);
+	}
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param id See Component
+	 * @param pageClassModel The class of page to link to
+	 * @param parametersModel The parameters to pass to the new page when the link is clicked
+	 * @since 1.2
+	 */
+	public <C extends Page> ConfigurableBookmarkablePageLink(String id, IModel<Class<? extends Page>> pageClassModel,
+			IModel<PageParameters> parametersModel) {
+		super(id);
+		
+		this.pageClassModel = pageClassModel;
+		this.parametersModel = parametersModel;
 	}
 	
 	/**
@@ -82,10 +98,7 @@ public class ConfigurableBookmarkablePageLink<T> extends Link<T> {
 	 */
 	public <C extends Page> ConfigurableBookmarkablePageLink(String id, IModel<Class<? extends Page>> pageClassModel,
 			PageParameters parameters) {
-		super(id);
-		
-		this.pageClassModel = pageClassModel;
-		this.parameters = parameters;
+		this(id, pageClassModel, Model.of(parameters));
 	}
 	
 	/**
@@ -94,15 +107,16 @@ public class ConfigurableBookmarkablePageLink<T> extends Link<T> {
 	 * @return Page class
 	 */
 	public final Class<? extends Page> getPageClass() {
-		return pageClassModel.getObject();
+		return pageClassModel == null ? null : pageClassModel.getObject();
 	}
 	
 	/**
 	 * @return page parameters
 	 */
 	public PageParameters getPageParameters() {
+		PageParameters parameters = parametersModel == null ? null : parametersModel.getObject();
 		if (parameters == null) {
-			parameters = new PageParameters();
+			return new PageParameters();
 		}
 		return parameters;
 	}

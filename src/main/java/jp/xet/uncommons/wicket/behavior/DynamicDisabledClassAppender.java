@@ -27,6 +27,7 @@ import org.apache.wicket.markup.ComponentTag;
  * @version $Id$
  * @author daisuke
  */
+@Deprecated
 @SuppressWarnings("serial")
 public class DynamicDisabledClassAppender extends Behavior {
 	

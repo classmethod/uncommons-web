@@ -18,6 +18,7 @@ package jp.xet.uncommons.wicket.fixedurl;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.resolver.AutoLinkResolver;
@@ -52,10 +53,32 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	/**
 	 * {@link FixedUrlMountedMapper}用に、aタグでの自動リンクに ?reload を自動付与する処理を追加する。
 	 * 
+	 * @param application {@link Application}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @since 1.6
+	 */
+	public static void initialize(Application application) {
+		Validate.notNull(application);
+		List<IComponentResolver> resolvers = application.getPageSettings().getComponentResolvers();
+		for (IComponentResolver resolver : resolvers) {
+			if (resolver instanceof AutoLinkResolver) {
+				AutoLinkResolver autoLinkResolver = (AutoLinkResolver) resolver;
+				IAutolinkResolverDelegate delegateForAElement = autoLinkResolver.getAutolinkResolverDelegate("a");
+				IAutolinkResolverDelegate newDelegate = new ForceReloadAutolinkResolverDelegate(delegateForAElement);
+				autoLinkResolver.addTagReferenceResolver("a", "href", newDelegate);
+			}
+		}
+	}
+	
+	/**
+	 * {@link FixedUrlMountedMapper}用に、aタグでの自動リンクに ?reload を自動付与する処理を追加する。
+	 * 
 	 * @param pageSettings {@link IPageSettings}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 1.2
+	 * @deprecated use {@link #initialize(Application)}
 	 */
+	@Deprecated
 	public static void initialize(IPageSettings pageSettings) {
 		Validate.notNull(pageSettings);
 		List<IComponentResolver> resolvers = pageSettings.getComponentResolvers();
