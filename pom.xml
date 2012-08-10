@@ -147,12 +147,18 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
-      <version>3.1.0.RELEASE</version>
+      <version>${spring-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
-      <version>3.1.0.RELEASE</version>
+      <version>${spring-version}</version>
     </dependency>
     <!-- ここまで -->
     <dependency>
@@ -175,15 +181,29 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-expression</artifactId>
-      <version>3.1.0.RELEASE</version>
+      <version>${spring-version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
-      <version>3.1.0.RELEASE</version>
+      <version>${spring-version}</version>
+    </dependency>
+    <!-- ここまで -->
+    <dependency>
+      <groupId>org.springframework.integration</groupId>
+      <artifactId>spring-integration-mail</artifactId>
+      <version>${spring-integration-version}</version>
+      <optional>true</optional>
+    </dependency>
+    <!-- ここから: spring-integration-mailが v3.0.7依存なので強制上書き -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${spring-version}</version>
     </dependency>
     <!-- ここまで -->
 
+    <!-- OPTIONAL DEPENDENCIES -->
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-core</artifactId>
@@ -214,14 +234,7 @@
       <version>1.5.0</version>
       <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.integration</groupId>
-      <artifactId>spring-integration-mail</artifactId>
-      <version>${spring-integration-version}</version>
-      <optional>true</optional>
-    </dependency>
     
-    <!-- OPTIONAL DEPENDENCIES -->
     <dependency>
       <groupId>com.ibm.icu</groupId>
       <artifactId>icu4j</artifactId>
@@ -270,13 +283,13 @@
   </distributionManagement>
   <properties>
     <commons-lang-version>[2.6,3.0)</commons-lang-version>
-    <baseunits-version>2.0</baseunits-version>
+    <baseunits-version>[2.0,3.0)</baseunits-version>
     <slf4j-version>[1.6.2,1.7.0)</slf4j-version>
     <logback-version>[1.0.0,1.1.0)</logback-version>
-    <spring-version>3.1.0.RELEASE</spring-version>
-    <spring-security-version>3.1.0.RELEASE</spring-security-version>
-    <spring-data-core-version>1.1.0.RELEASE</spring-data-core-version>
-    <spring-integration-version>2.1.0.RELEASE</spring-integration-version>
+    <spring-version>[3.1.0.RELEASE,3.1.99.RELEASE]</spring-version>
+    <spring-security-version>[3.1.0.RELEASE,3.1.99.RELEASE]</spring-security-version>
+    <spring-data-core-version>[1.1.0.RELEASE,1.1.99.RELEASE]</spring-data-core-version>
+    <spring-integration-version>[2.1.0.RELEASE,2.1.99.RELEASE]</spring-integration-version>
     <wicket-version>[1.5.0,1.6.0)</wicket-version>
     <icu4j-version>[4.8.1.1,5.0)</icu4j-version>
     <guava-version>10.0.1</guava-version>
