@@ -205,6 +205,12 @@
 
     <!-- OPTIONAL DEPENDENCIES -->
     <dependency>
+      <groupId>com.googlecode.htmlcompressor</groupId>
+      <artifactId>htmlcompressor</artifactId>
+      <version>1.5.2</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket-core</artifactId>
       <version>${wicket-version}</version>
