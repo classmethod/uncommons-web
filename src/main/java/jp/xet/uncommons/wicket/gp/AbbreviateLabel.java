@@ -16,16 +16,12 @@
  */
 package jp.xet.uncommons.wicket.gp;
 
-import java.util.Locale;
-
-import jp.xet.uncommons.wicket.model.AbbreviateStringModel;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.convert.converter.AbstractConverter;
 
 /**
  * {@link Label} implementation which abbreviates a String using ellipses.
@@ -48,9 +44,7 @@ import org.apache.wicket.util.convert.converter.AbstractConverter;
  * @version $Id$
  * @author daisuke
  * @see StringUtils#abbreviate(String, int)
- * @deprecated use {@link AbbreviateStringModel}
  */
-@Deprecated
 @SuppressWarnings("serial")
 public class AbbreviateLabel extends Label {
 	
@@ -96,25 +90,8 @@ public class AbbreviateLabel extends Label {
 	}
 	
 	@Override
-	public <C>IConverter<C> getConverter(final Class<C> type) {
-		return new AbstractConverter<C>() {
-			
-			@Override
-			public C convertToObject(String value, Locale locale) {
-				throw new UnsupportedOperationException();
-			}
-			
-			@Override
-			public String convertToString(C value, Locale locale) {
-				IConverter<C> converter = AbbreviateLabel.super.getConverter(type);
-				String string = converter.convertToString(value, locale);
-				return StringUtils.abbreviate(string, maxWidth);
-			}
-			
-			@Override
-			protected Class<C> getTargetType() {
-				return type;
-			}
-		};
+	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
+		String string = getDefaultModelObjectAsString();
+		replaceComponentTagBody(markupStream, openTag, StringUtils.abbreviate(string, maxWidth));
 	}
 }
