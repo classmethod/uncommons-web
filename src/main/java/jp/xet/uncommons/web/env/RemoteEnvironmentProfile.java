@@ -18,7 +18,7 @@ package jp.xet.uncommons.web.env;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.springframework.util.ObjectUtils;
 
 /**
  * TODO for daisuke
@@ -40,11 +40,11 @@ public enum RemoteEnvironmentProfile implements EnvironmentProfile {
 	
 	public static EnvironmentProfile toEnvironmentProfile(String[] activeProfiles) {
 		for (RemoteEnvironmentProfile p : RemoteEnvironmentProfile.values()) {
-			if (ArrayUtils.contains(activeProfiles, p.toString())) {
+			if (ObjectUtils.containsElement(activeProfiles, p.toString())) {
 				return p;
 			}
 		}
-		if (ArrayUtils.isEmpty(activeProfiles)) {
+		if (ObjectUtils.isEmpty(activeProfiles)) {
 			return DEVELOPMENT;
 		} else {
 			return new LocalEnvironmentProfile(activeProfiles[0]);

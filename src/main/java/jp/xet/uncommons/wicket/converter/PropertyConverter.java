@@ -18,11 +18,11 @@ package jp.xet.uncommons.wicket.converter;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.lang.PropertyResolver;
 
 /**
@@ -49,8 +49,8 @@ public class PropertyConverter<T> extends AbstractConverter<T> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public PropertyConverter(Class<T> clazz, String expression) {
-		Validate.notNull(clazz);
-		Validate.notNull(expression);
+		Args.notNull(clazz, "clazz");
+		Args.notNull(expression, "expression");
 		this.clazz = clazz;
 		this.expression = expression;
 	}

@@ -16,14 +16,13 @@
  */
 package jp.xet.uncommons.wicket.behavior;
 
-import com.google.common.base.Strings;
-
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.Strings;
+import org.springframework.util.Assert;
 
 /**
  * TODO for daisuke
@@ -46,7 +45,7 @@ public class CanonicalRefBehavior extends Behavior {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public CanonicalRefBehavior(IModel<String> canonicalUrlModel) {
-		Validate.notNull(canonicalUrlModel);
+		Assert.notNull(canonicalUrlModel);
 		this.canonicalUrlModel = canonicalUrlModel;
 	}
 	
@@ -63,7 +62,7 @@ public class CanonicalRefBehavior extends Behavior {
 	@Override
 	public void renderHead(Component component, IHeaderResponse response) {
 		String canonicalUrl = canonicalUrlModel.getObject();
-		if (Strings.isNullOrEmpty(canonicalUrl) == false) {
+		if (Strings.isEmpty(canonicalUrl) == false) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<link rel=\"canonical\" href=\"");
 			sb.append(canonicalUrl);

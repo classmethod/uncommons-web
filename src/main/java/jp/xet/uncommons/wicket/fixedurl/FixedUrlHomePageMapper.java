@@ -18,7 +18,6 @@ package jp.xet.uncommons.wicket.fixedurl;
 
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.resolver.AutoLinkResolver;
@@ -32,6 +31,7 @@ import org.apache.wicket.request.mapper.HomePageMapper;
 import org.apache.wicket.request.mapper.ICompoundRequestMapper;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.util.ClassProvider;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -46,11 +46,11 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	 * TODO for daisuke
 	 * 
 	 * @param application {@link Application}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.2
 	 */
 	public static void replaceHomePageMapper(final Application application) {
-		Validate.notNull(application);
+		Args.notNull(application, "application");
 		ICompoundRequestMapper mappers = application.getRootRequestMapperAsCompound();
 		IRequestMapper homePageMapper = null;
 		for (IRequestMapper mapper : mappers) {
@@ -83,7 +83,7 @@ public class FixedUrlHomePageMapper extends FixedUrlMountedMapper {
 	 */
 	@Deprecated
 	public static void wrapAutoLinkResolver(final Application application) {
-		Validate.notNull(application);
+		Args.notNull(application, "application");
 		List<IComponentResolver> resolvers = application.getPageSettings().getComponentResolvers();
 		for (IComponentResolver resolver : resolvers) {
 			if (resolver instanceof AutoLinkResolver) {

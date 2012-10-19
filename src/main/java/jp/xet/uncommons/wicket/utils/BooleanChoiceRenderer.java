@@ -16,11 +16,11 @@
  */
 package jp.xet.uncommons.wicket.utils;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Localizer;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -45,7 +45,7 @@ public class BooleanChoiceRenderer extends ChoiceRenderer<Boolean> {
 	 * @throws IllegalArgumentException 引数{@code prefix}に{@code null}を与えた場合
 	 */
 	public BooleanChoiceRenderer(String prefix, Component component) {
-		Validate.notNull(prefix);
+		Args.notNull(prefix, "prefix");
 		this.prefix = prefix;
 		this.component = component;
 	}

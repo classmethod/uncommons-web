@@ -22,8 +22,8 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * 値と表示値（ラベル）を個別指定する {@link IChoiceRenderer} 実装クラス。
@@ -51,7 +51,7 @@ public class LabelValueChoiceRenderer<T> implements IChoiceRenderer<T> {
 	 * @since 1.0.0
 	 */
 	public LabelValueChoiceRenderer<T> addValue(T value, String displayValue) {
-		Validate.notNull(displayValue);
+		Args.notNull(displayValue, "displayValue");
 		this.values.add(value);
 		this.displayValues.put(value, displayValue);
 		return this;

@@ -18,7 +18,6 @@ package jp.xet.uncommons.wicket.paging;
 
 import jp.xet.uncommons.wicket.gp.SimplePagingNavigator;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -28,6 +27,7 @@ import org.apache.wicket.markup.html.navigation.paging.IPagingLabelProvider;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigation;
 import org.apache.wicket.request.IRequestParameters;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -76,9 +76,9 @@ public class RequestParameterPagingNavigator<T extends Page> extends SimplePagin
 	public RequestParameterPagingNavigator(String id, Class<T> clazz, IPageable pageable, String pageKeyName,
 			int viewsize, boolean anchorSelf) {
 		super(id, pageable, viewsize, anchorSelf);
-		Validate.notNull(clazz);
-		Validate.notNull(pageable);
-		Validate.notNull(pageKeyName);
+		Args.notNull(clazz, "clazz");
+		Args.notNull(pageable, "pageable");
+		Args.notNull(pageKeyName, "pageKeyName");
 		
 		this.clazz = clazz;
 		this.pageable = pageable;
@@ -99,9 +99,9 @@ public class RequestParameterPagingNavigator<T extends Page> extends SimplePagin
 	public RequestParameterPagingNavigator(String id, Class<T> clazz, IPageable pageable, String pageKeyName,
 			int viewsize, String anchor) {
 		super(id, pageable, viewsize, false);
-		Validate.notNull(clazz);
-		Validate.notNull(pageable);
-		Validate.notNull(pageKeyName);
+		Args.notNull(clazz, "clazz");
+		Args.notNull(pageable, "pageable");
+		Args.notNull(pageKeyName, "pageKeyName");
 		
 		this.clazz = clazz;
 		this.pageable = pageable;

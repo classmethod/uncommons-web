@@ -16,7 +16,6 @@
  */
 package jp.xet.uncommons.wicket.fixedurl;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.markup.resolver.AutoLinkResolver.IAutolinkResolverDelegate;
@@ -41,9 +40,9 @@ class ForceReloadAutolinkResolverDelegate implements IAutolinkResolverDelegate {
 			String reference = pathInfo.getReference();
 			StringBuilder newReference = new StringBuilder(reference);
 			int questionIndex = reference.indexOf('?');
-			if (questionIndex == StringUtils.INDEX_NOT_FOUND) {
+			if (questionIndex == -1) {
 				int hashIndex = reference.indexOf('#');
-				if (hashIndex == StringUtils.INDEX_NOT_FOUND) {
+				if (hashIndex == -1) {
 					newReference.append("?").append(FixedUrlMountedMapper.KEY_RELOAD);
 				} else {
 					newReference.insert(hashIndex, "?" + FixedUrlMountedMapper.KEY_RELOAD);

@@ -16,10 +16,10 @@
  */
 package jp.xet.uncommons.wicket.paging;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -108,7 +108,7 @@ public abstract class RequestParameterDataView<T> extends DataView<T> {
 	 * @since 1.0
 	 */
 	protected void setCurrentPage(String paramKey) {
-		Validate.notNull(paramKey);
+		Args.notNull(paramKey, "paramKey");
 		
 		String pageNumberStr = getRequest().getRequestParameters().getParameterValue(paramKey).toString();
 		if (pageNumberStr == null) {

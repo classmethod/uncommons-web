@@ -16,7 +16,6 @@
  */
 package jp.xet.uncommons.wicket.gp;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -25,6 +24,7 @@ import org.apache.wicket.markup.html.navigation.paging.IPageable;
 import org.apache.wicket.markup.html.navigation.paging.IPagingLabelProvider;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigation;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -76,13 +76,14 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 * @param pageKeyName 
 	 * @param viewsize
 	 * @param anchorSelf
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public StatelessSimplePagingNavigator(String id, Class<T> clazz, PageParameters params, IPageable pageable,
 			String pageKeyName, int viewsize, boolean anchorSelf) {
 		super(id, pageable, viewsize, anchorSelf);
-		Validate.notNull(clazz);
-		Validate.notNull(pageable);
-		Validate.notNull(pageKeyName);
+		Args.notNull(clazz, "clazz");
+		Args.notNull(pageable, "pageable");
+		Args.notNull(pageKeyName, "pageKeyName");
 		
 		this.clazz = clazz;
 		this.params = params;
@@ -102,13 +103,14 @@ public class StatelessSimplePagingNavigator<T extends Page> extends SimplePaging
 	 * @param pageKeyName 
 	 * @param viewsize
 	 * @param anchor
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public StatelessSimplePagingNavigator(String id, Class<T> clazz, PageParameters params, IPageable pageable,
 			String pageKeyName, int viewsize, String anchor) {
 		super(id, pageable, viewsize, false);
-		Validate.notNull(clazz);
-		Validate.notNull(pageable);
-		Validate.notNull(pageKeyName);
+		Args.notNull(clazz, "clazz");
+		Args.notNull(pageable, "pageable");
+		Args.notNull(pageKeyName, "pageKeyName");
 		
 		this.clazz = clazz;
 		this.params = params;

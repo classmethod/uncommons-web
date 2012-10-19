@@ -18,11 +18,11 @@ package jp.xet.uncommons.wicket.converter;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Localizer;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * リソースファイル内の情報によって {@link Boolean} 値を文字列に変換するコンバータ。
@@ -48,7 +48,7 @@ public class BooleanConverter extends AbstractConverter<Boolean> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public BooleanConverter(String prefix) {
-		Validate.notNull(prefix);
+		Args.notEmpty(prefix, "prefix");
 		this.prefix = prefix;
 	}
 	

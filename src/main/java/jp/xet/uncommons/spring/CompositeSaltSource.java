@@ -16,10 +16,9 @@
  */
 package jp.xet.uncommons.spring;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.Assert;
 
 /**
  * 複数の {@link SaltSource} の合成を行う実装クラス。
@@ -56,9 +55,9 @@ public class CompositeSaltSource implements SaltSource {
 	 * @throws IllegalArgumentException 引数{@code sources}に{@code null}を与えた場合
 	 */
 	public CompositeSaltSource(SaltSource[] sources, String separator) {
-		Validate.noNullElements(sources);
+		Assert.noNullElements(sources);
 		this.sources = sources.clone();
-		this.separator = StringUtils.defaultString(separator);
+		this.separator = separator == null ? "" : separator;
 	}
 	
 	@Override

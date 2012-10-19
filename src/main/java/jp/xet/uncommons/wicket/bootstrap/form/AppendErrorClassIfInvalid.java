@@ -16,11 +16,11 @@
  */
 package jp.xet.uncommons.wicket.bootstrap.form;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * 指定したコンポーネントでエラーが発生した際、CSS class "error" を追加するビヘイビア。
@@ -36,7 +36,7 @@ public class AppendErrorClassIfInvalid extends AttributeAppender {
 	 * インスタンスを生成する。
 	 * 
 	 * @param component バリデーション対象 {@link FormComponent}
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public AppendErrorClassIfInvalid(final FormComponent<?> component) {
 		this(new AbstractReadOnlyModel<FormComponent<?>>() {
@@ -46,14 +46,14 @@ public class AppendErrorClassIfInvalid extends AttributeAppender {
 				return component;
 			}
 		});
-		Validate.notNull(component);
+		Args.notNull(component, "component");
 	}
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
 	 * @param supplier バリデーション対象 {@link FormComponent}を提供するモデル
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public AppendErrorClassIfInvalid(final IModel<FormComponent<?>> supplier) {
 		super("class", new AbstractReadOnlyModel<String>() {
@@ -63,6 +63,6 @@ public class AppendErrorClassIfInvalid extends AttributeAppender {
 				return supplier.getObject().isValid() ? "" : " error";
 			}
 		});
-		Validate.notNull(supplier);
+		Args.notNull(supplier, "supplier");
 	}
 }

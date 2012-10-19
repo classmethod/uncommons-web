@@ -19,7 +19,8 @@ package jp.xet.uncommons.wicket.behavior;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.base.Preconditions;
+
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.Validatable;
 
@@ -38,10 +39,11 @@ public abstract class AbstractValidatorTest {
 	 * @param validator バリデータ
 	 * @param value 値
 	 * @param valid validと判断すべき場合は{@code true}、そうでない場合は{@code false}
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 * @since 1.0
 	 */
 	protected static <T>void assertValid(IValidator<T> validator, T value, boolean valid) {
-		Validate.notNull(validator);
+		Preconditions.checkNotNull(validator);
 		Validatable<T> target = new Validatable<T>(value);
 		validator.validate(target);
 		assertThat(target.isValid(), is(valid));

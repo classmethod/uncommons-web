@@ -20,8 +20,7 @@ import java.io.Serializable;
 
 import jp.xet.baseunits.time.TimePoint;
 
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * レンダリングしたフォームを特定するためのキーオブジェクト。
@@ -50,7 +49,7 @@ public class FormKey implements Serializable {
 	 * @since 1.3
 	 */
 	public FormKey(int pageId, String formId, long timestamp) {
-		Validate.notNull(formId);
+		Args.notNull(formId, "formId");
 		this.pageId = pageId;
 		this.formId = formId;
 		this.timestamp = timestamp;
@@ -66,8 +65,8 @@ public class FormKey implements Serializable {
 	 * @since 1.3
 	 */
 	public FormKey(int pageId, String formId, TimePoint timestamp) {
-		Validate.notNull(formId);
-		Validate.notNull(timestamp);
+		Args.notNull(formId, "formId");
+		Args.notNull(timestamp, "timestamp");
 		this.pageId = pageId;
 		this.formId = formId;
 		this.timestamp = timestamp.toEpochMillisec();
@@ -113,6 +112,6 @@ public class FormKey implements Serializable {
 	
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return "FormKey [pageId=" + pageId + ", formId=" + formId + ", timestamp=" + timestamp + "]";
 	}
 }

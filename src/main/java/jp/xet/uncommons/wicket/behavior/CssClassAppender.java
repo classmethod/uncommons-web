@@ -16,10 +16,10 @@
  */
 package jp.xet.uncommons.wicket.behavior;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * 要素に対して、指定したCSSクラスを追加するビヘイビア実装クラス。
@@ -38,10 +38,10 @@ public class CssClassAppender extends Behavior {
 	 * インスタンスを生成する。
 	 * 
 	 * @param cssClass 追加するクラス名
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public CssClassAppender(String cssClass) {
-		Validate.notNull(cssClass);
+		Args.notNull(cssClass, "cssClass");
 		this.cssClass = cssClass;
 	}
 	

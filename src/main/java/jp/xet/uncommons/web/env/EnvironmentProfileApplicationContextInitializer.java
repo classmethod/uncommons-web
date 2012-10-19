@@ -18,12 +18,12 @@ package jp.xet.uncommons.web.env;
 
 import com.google.common.base.Strings;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.util.ObjectUtils;
 
 /**
  * TODO for daisuke
@@ -45,7 +45,7 @@ public class EnvironmentProfileApplicationContextInitializer implements
 		ConfigurableEnvironment environment = applicationContext.getEnvironment();
 		
 		String[] activeProfiles = environment.getActiveProfiles();
-		if (ArrayUtils.isEmpty(activeProfiles)) {
+		if (ObjectUtils.isEmpty(activeProfiles)) {
 			String propEnvironment = environment.getProperty("environment");
 			if (Strings.isNullOrEmpty(propEnvironment)) {
 				environment.setActiveProfiles("development");

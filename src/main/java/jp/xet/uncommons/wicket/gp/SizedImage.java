@@ -16,13 +16,12 @@
  */
 package jp.xet.uncommons.wicket.gp;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
 /**
@@ -66,8 +65,8 @@ public class SizedImage extends Image {
 	 */
 	public SizedImage(String id, IResource imageResource, int width, int height, String alt) {
 		super(id, imageResource);
-		Validate.isTrue(width >= 0);
-		Validate.isTrue(height >= 0);
+		Args.isTrue(width >= 0, "width must not to be negative: %d", width);
+		Args.isTrue(height >= 0, "height must not to be negative: %d", height);
 		this.width = width;
 		this.height = height;
 		this.alt = alt;
@@ -96,8 +95,8 @@ public class SizedImage extends Image {
 	 */
 	public SizedImage(String id, ResourceReference resourceReference, int width, int height, String alt) {
 		super(id, resourceReference);
-		Validate.isTrue(width >= 0);
-		Validate.isTrue(height >= 0);
+		Args.isTrue(width >= 0, "width must not to be negative: %d", width);
+		Args.isTrue(height >= 0, "height must not to be negative: %d", height);
 		this.width = width;
 		this.height = height;
 		this.alt = alt;
@@ -130,8 +129,8 @@ public class SizedImage extends Image {
 	public SizedImage(String id, ResourceReference resourceReference, PageParameters resourceParameters, int width,
 			int height, String alt) {
 		super(id, resourceReference, resourceParameters);
-		Validate.isTrue(width >= 0);
-		Validate.isTrue(height >= 0);
+		Args.isTrue(width >= 0, "width must not to be negative: %d", width);
+		Args.isTrue(height >= 0, "height must not to be negative: %d", height);
 		this.width = width;
 		this.height = height;
 		this.alt = alt;
@@ -143,7 +142,7 @@ public class SizedImage extends Image {
 		
 		tag.put("width", width);
 		tag.put("height", height);
-		if (StringUtils.isEmpty(alt) == false) {
+		if (Strings.isEmpty(alt) == false) {
 			CharSequence escapedAlt = Strings.escapeMarkup(alt);
 			tag.put("alt", escapedAlt);
 			tag.put("title", escapedAlt);

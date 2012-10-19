@@ -21,7 +21,6 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.ClassUtils;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.form.Form;
@@ -138,6 +137,6 @@ public class CsrfSecureForm<T> extends Form<T> {
 	
 	private void initCsrfToken() {
 		csrfToken = String.valueOf(RAND.nextLong());
-		logger.trace("new CSRF token for {}: {}", ClassUtils.getShortClassName(getClass()), csrfToken);
+		logger.trace("new CSRF token for {}: {}", getClass().getName(), csrfToken);
 	}
 }

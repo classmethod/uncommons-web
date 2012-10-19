@@ -16,9 +16,9 @@
  */
 package jp.xet.uncommons.wicket.gp;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link IDataProvider}が空の時のみ表示する{@link WebMarkupContainer}クラス。
@@ -38,10 +38,11 @@ public class DisplayIfEmptyContainer extends WebMarkupContainer {
 	 * 
 	 * @param id The non-null id of this component
 	 * @param provider 対象の{@link IDataProvider}
+	 * @throws IllegalArgumentException 引数{@code provider}に{@code null}を与えた場合
 	 */
 	public DisplayIfEmptyContainer(String id, IDataProvider<?> provider) {
 		super(id);
-		Validate.notNull(provider);
+		Args.notNull(provider, "provider");
 		this.provider = provider;
 	}
 	

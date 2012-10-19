@@ -22,9 +22,9 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * 指定したリストモデルの中から、特定の条件を満たす要素のみをフィルタするモデル
@@ -47,11 +47,11 @@ public class FilterModel<T> extends AbstractReadOnlyModel<List<? extends T>> {
 	 * 
 	 * @param delegate 元のモデル
 	 * @param predicate 抽出条件
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws NullPointerException 引数に{@code null}を与えた場合
 	 */
 	public FilterModel(IModel<List<? extends T>> delegate, Predicate<T> predicate) {
-		Validate.notNull(delegate);
-		Validate.notNull(predicate);
+		Args.notNull(delegate, "delegate");
+		Args.notNull(predicate, "predicate");
 		this.delegate = delegate;
 		this.predicate = predicate;
 	}

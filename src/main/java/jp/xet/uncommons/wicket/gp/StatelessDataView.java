@@ -16,10 +16,10 @@
  */
 package jp.xet.uncommons.wicket.gp;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -117,8 +117,8 @@ public abstract class StatelessDataView<T> extends DataView<T> {
 	 * @since 1.0
 	 */
 	protected void setCurrentPage(PageParameters params, String paramKey) {
-		Validate.notNull(params);
-		Validate.notNull(paramKey);
+		Args.notNull(params, "params");
+		Args.notNull(paramKey, "paramKey");
 		String pageNumberStr = params.get(paramKey).toString("1");
 		if (pageNumberStr.contains(".wicket-")) {
 			pageNumberStr = pageNumberStr.substring(0, pageNumberStr.indexOf(".wicket-"));

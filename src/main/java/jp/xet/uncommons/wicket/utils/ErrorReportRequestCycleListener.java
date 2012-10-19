@@ -18,17 +18,17 @@ package jp.xet.uncommons.wicket.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import jp.xet.uncommons.web.env.EnvironmentProfile;
 import jp.xet.uncommons.web.env.RemoteEnvironmentProfile;
 
-import com.google.common.io.Closeables;
-
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.PageExpiredException;
 import org.apache.wicket.request.IRequestHandler;
@@ -36,6 +36,7 @@ import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
 import org.apache.wicket.request.cycle.IRequestCycleListener;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.StalePageException;
+import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.EnvironmentAware;
@@ -43,6 +44,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.util.ObjectUtils;
 
 /**
  * アプリケーション内で処理されない例外が発生した場合に、メールを送信する {@link IRequestCycleListener} 実装クラス。
@@ -113,10 +115,10 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 	 */
 	public ErrorReportRequestCycleListener(MailSender mailSender, String from, String to, String subjectPattern,
 			String[] enabledEnvironments) {
-		Validate.notNull(mailSender);
-		Validate.notNull(from);
-		Validate.notNull(to);
-		Validate.notNull(subjectPattern);
+		Args.notNull(mailSender, "mailSender");
+		Args.notNull(from, "from");
+		Args.notNull(to, "to");
+		Args.notNull(subjectPattern, "subjectPattern");
 		this.from = from;
 		this.to = to;
 		this.subjectPattern = subjectPattern;
@@ -143,14 +145,14 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 		}
 		
 		if (ex instanceof WicketRuntimeException) {
-			Throwable rootCause = ExceptionUtils.getRootCause(ex);
+			Throwable rootCause = getRootCause(ex);
 			if (rootCause == null) {
 				rootCause = ex;
 			}
 			
 			String environment = loadEnvironment();
 			if (enabledEnvironments == null || environment == null
-					|| ArrayUtils.contains(enabledEnvironments, environment)) {
+					|| ObjectUtils.containsElement(enabledEnvironments, environment)) {
 				String type = rootCause.getClass().getSimpleName();
 				String message = rootCause.getMessage();
 				String subject = MessageFormat.format(subjectPattern, environment, type, message);
@@ -159,7 +161,7 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 				mailMessage.setFrom(from);
 				mailMessage.setTo(to);
 				mailMessage.setSubject(subject);
-				mailMessage.setText(ExceptionUtils.getStackTrace(ex));
+				mailMessage.setText(getStackTrace(ex));
 				try {
 					logger.debug("sending exception report mail...");
 					mailSender.send(mailMessage);
@@ -170,7 +172,7 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 			} else {
 				logger.debug("exception report mail was not sent, "
 						+ "because enabledEnvironments{} does not contain environment[{}]", new Object[] {
-					ArrayUtils.toString(enabledEnvironments),
+					Arrays.toString(enabledEnvironments),
 					environment
 				});
 			}
@@ -208,7 +210,34 @@ public class ErrorReportRequestCycleListener extends AbstractRequestCycleListene
 		} catch (IOException ex) {
 			return "";
 		} finally {
-			Closeables.closeQuietly(in);
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					logger.error("IOException should not have been thrown.", e);
+				}
+			}
 		}
+	}
+	
+	Throwable getRootCause(Throwable throwable) {
+		List<Throwable> list = getThrowableList(throwable);
+		return list.size() < 2 ? null : list.get(list.size() - 1);
+	}
+	
+	String getStackTrace(Throwable throwable) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw, true);
+		throwable.printStackTrace(pw);
+		return sw.getBuffer().toString();
+	}
+	
+	List<Throwable> getThrowableList(Throwable throwable) {
+		List<Throwable> list = new ArrayList<Throwable>();
+		while (throwable != null && list.contains(throwable) == false) {
+			list.add(throwable);
+			throwable = throwable.getCause();
+		}
+		return list;
 	}
 }

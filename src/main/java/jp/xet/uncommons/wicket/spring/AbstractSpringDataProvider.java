@@ -20,10 +20,10 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.lang.Args;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -70,7 +70,7 @@ public abstract class AbstractSpringDataProvider<T extends Serializable> impleme
 	 * @throws IllegalArgumentException 引数{@code itemsPerPage}が正数でなかった場合
 	 */
 	public AbstractSpringDataProvider(int itemsPerPage) {
-		Validate.isTrue(itemsPerPage > 0);
+		Args.isTrue(itemsPerPage > 0, "itemsPerPage must to be positive: %d", itemsPerPage);
 		this.itemsPerPage = itemsPerPage;
 		clearCachedItemCount();
 	}

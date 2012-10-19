@@ -17,7 +17,6 @@ package jp.xet.uncommons.wicket.fixedurl;
 
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
@@ -38,6 +37,7 @@ import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.settings.IPageSettings;
 import org.apache.wicket.util.ClassProvider;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * {@link IRequestMapper} implementation for Fixed URL strategy.
@@ -58,7 +58,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	 * @since 1.6
 	 */
 	public static void initialize(Application application) {
-		Validate.notNull(application);
+		Args.notNull(application, "application");
 		List<IComponentResolver> resolvers = application.getPageSettings().getComponentResolvers();
 		for (IComponentResolver resolver : resolvers) {
 			if (resolver instanceof AutoLinkResolver) {
@@ -80,7 +80,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	 */
 	@Deprecated
 	public static void initialize(IPageSettings pageSettings) {
-		Validate.notNull(pageSettings);
+		Args.notNull(pageSettings, "pageSettings");
 		List<IComponentResolver> resolvers = pageSettings.getComponentResolvers();
 		for (IComponentResolver resolver : resolvers) {
 			if (resolver instanceof AutoLinkResolver) {
@@ -112,7 +112,7 @@ public class FixedUrlMountedMapper extends MountedMapper {
 	 * @since 1.1
 	 */
 	public static PageParameters updateReloadParameter(PageParameters params) {
-		Validate.notNull(params);
+		Args.notNull(params, "params");
 		if (params.getNamedKeys().contains(KEY_RELOAD) == false) {
 			params.add(KEY_RELOAD, "");
 		}

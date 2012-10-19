@@ -21,9 +21,9 @@ import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * TODO for daisuke
@@ -49,8 +49,8 @@ public class SingleSelectModel<T> extends AbstractReadOnlyModel<T> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public SingleSelectModel(IModel<List<? extends T>> delegate, Predicate<T> predicate) {
-		Validate.notNull(delegate);
-		Validate.notNull(predicate);
+		Args.notNull(delegate, "delegate");
+		Args.notNull(predicate, "predicate");
 		this.delegate = delegate;
 		this.predicate = predicate;
 	}

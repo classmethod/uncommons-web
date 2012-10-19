@@ -19,7 +19,6 @@ package jp.xet.uncommons.wicket.bootstrap;
 import jp.xet.uncommons.wicket.behavior.FocusOnLoadBehavior;
 import jp.xet.uncommons.wicket.bootstrap.form.ControlGroup;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.authentication.IAuthenticationStrategy;
 import org.apache.wicket.authentication.strategy.DefaultAuthenticationStrategy;
@@ -85,7 +84,7 @@ public class SignInPanel extends Panel {
 	 * @param rememberMeDefaultValue default value of remember-me checkbox
 	 */
 	public SignInPanel(String id, boolean includeRememberMe, boolean rememberMeDefaultValue) {
-		this(id, StringUtils.EMPTY, includeRememberMe, rememberMeDefaultValue);
+		this(id, "", includeRememberMe, rememberMeDefaultValue);
 	}
 	
 	/**

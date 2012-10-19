@@ -18,7 +18,7 @@ package jp.xet.uncommons.wicket.behavior;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.Validate;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.validator.AbstractValidator;
 
@@ -46,7 +46,10 @@ public class ContainsValidator<T> extends AbstractValidator<T> {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public ContainsValidator(Collection<T> standard) {
-		Validate.noNullElements(standard);
+		Args.notNull(standard, "standard");
+		for (T st : standard) {
+			Args.notNull(st, "standard element");
+		}
 		this.standard = standard;
 	}
 	

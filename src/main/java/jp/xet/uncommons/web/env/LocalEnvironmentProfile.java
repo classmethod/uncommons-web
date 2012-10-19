@@ -16,7 +16,7 @@
  */
 package jp.xet.uncommons.web.env;
 
-import org.apache.commons.lang.Validate;
+import org.springframework.util.Assert;
 
 /**
  * TODO for daisuke
@@ -37,7 +37,7 @@ public class LocalEnvironmentProfile implements EnvironmentProfile {
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合 
 	 */
 	public LocalEnvironmentProfile(String environmentName) {
-		Validate.notNull(environmentName);
+		Assert.notNull(environmentName);
 		this.environmentName = environmentName;
 	}
 	

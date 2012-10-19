@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import jp.xet.baseunits.timeutil.Clock;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.dynamodb.AmazonDynamoDB;
@@ -55,11 +53,9 @@ import com.amazonaws.services.dynamodb.model.UpdateItemRequest;
 import com.amazonaws.services.dynamodb.model.UpdateItemResult;
 import com.amazonaws.services.dynamodb.model.WriteRequest;
 import com.amazonaws.util.DateUtils;
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -111,7 +107,7 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 	
 	@Override
 	public void createNewToken(PersistentRememberMeToken token) {
-		Preconditions.checkNotNull(token);
+		Assert.notNull(token);
 		if (logger.isTraceEnabled()) {
 			logger.trace("Create token: username={}, series={}, tokenValue={}, date={}", new Object[] {
 				token.getUsername(),
@@ -238,13 +234,13 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 	
 	@SuppressWarnings("javadoc")
 	public void setDynamoDb(AmazonDynamoDB dynamoDb) {
-		Validate.notNull(dynamoDb);
+		Assert.notNull(dynamoDb);
 		this.dynamoDb = dynamoDb;
 	}
 	
 	@SuppressWarnings("javadoc")
 	public void setPersistentLoginTable(String persistentLoginTable) {
-		Validate.notNull(persistentLoginTable);
+		Assert.notNull(persistentLoginTable);
 		this.persistentLoginTable = persistentLoginTable;
 	}
 	
@@ -259,7 +255,7 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 		}
 		
 		try {
-			String now = dateUtils.formatIso8601Date(Clock.now().asJavaUtilDate());
+			String now = dateUtils.formatIso8601Date(new Date());
 			Map<String, AttributeValueUpdate> attributeUpdates = Maps.newHashMapWithExpectedSize(2);
 			attributeUpdates.put(TOKEN, new AttributeValueUpdate(new AttributeValue(tokenValue), AttributeAction.PUT));
 			attributeUpdates.put(LAST_USED, new AttributeValueUpdate(new AttributeValue(now), AttributeAction.PUT));

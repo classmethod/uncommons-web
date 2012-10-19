@@ -16,7 +16,8 @@
  */
 package jp.xet.uncommons.wicket.behavior;
 
-import org.apache.commons.lang.ObjectUtils;
+import com.google.common.base.Objects;
+
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.validator.AbstractValidator;
 
@@ -60,7 +61,7 @@ public class ExactValueValidator<T> extends AbstractValidator<T> {
 	@Override
 	protected void onValidate(IValidatable<T> validatable) {
 		T value = validatable.getValue();
-		if (ObjectUtils.equals(value, standard) == reverse) {
+		if (Objects.equal(value, standard) == reverse) {
 			error(validatable);
 		}
 	}

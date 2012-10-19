@@ -18,11 +18,11 @@ package jp.xet.uncommons.wicket.converter;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.Localizer;
 import org.apache.wicket.util.convert.converter.AbstractConverter;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * リソースファイル内の情報によって列挙型の値を文字列に変換するコンバータ。
@@ -49,7 +49,7 @@ public class EnumerationConverter<T extends Enum<T>> extends AbstractConverter<T
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public EnumerationConverter(Class<T> clazz) {
-		Validate.notNull(clazz);
+		Args.notNull(clazz, "clazz");
 		this.clazz = clazz;
 	}
 	

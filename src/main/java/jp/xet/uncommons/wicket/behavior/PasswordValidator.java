@@ -18,7 +18,7 @@ package jp.xet.uncommons.wicket.behavior;
 
 import java.util.Arrays;
 
-import org.apache.commons.lang.Validate;
+import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.validation.CompoundValidator;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
@@ -179,7 +179,7 @@ public final class PasswordValidator extends CompoundValidator<String> {
 	 * @throws IllegalArgumentException 引数{@code minLength}が{@code maxLength}よりも大きい場合
 	 */
 	public PasswordValidator(String username, int minLength, int maxLength) {
-		Validate.isTrue(minLength <= maxLength);
+		Args.isTrue(minLength <= maxLength, "minLength must to be smaller than or equal to maxLength");
 		
 		if (username != null) {
 			add(new PatternValidator(username) {
