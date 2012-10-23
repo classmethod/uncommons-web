@@ -37,7 +37,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 /**
  * TODO for daisuke
  * 
- * @since TODO for daisuke
+ * @since 1.7
  * @version $Id$
  * @author daisuke
  */
@@ -354,6 +354,5 @@ public class HtmlCompressionFilter extends OncePerRequestFilter {
 			}
 			out.write((byte) b);
 		}
-		
 	}
 }
