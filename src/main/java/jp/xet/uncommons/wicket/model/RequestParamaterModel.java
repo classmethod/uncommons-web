@@ -34,6 +34,8 @@ public class RequestParamaterModel extends LoadableDetachableModel<String> {
 	
 	private final String paramName;
 	
+	private final String defaultValue;
+	
 	
 	/**
 	 * インスタンスを生成する。
@@ -42,12 +44,24 @@ public class RequestParamaterModel extends LoadableDetachableModel<String> {
 	 * @since 1.7
 	 */
 	public RequestParamaterModel(String paramName) {
+		this(paramName, null);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param paramName リクエストパラメータ名
+	 * @param defaultValue デフォルト値
+	 * @since 1.8
+	 */
+	public RequestParamaterModel(String paramName, String defaultValue) {
 		this.paramName = paramName;
+		this.defaultValue = defaultValue;
 	}
 	
 	@Override
 	protected String load() {
-		return getValue(paramName).toString();
+		return getValue(paramName).toString(defaultValue);
 	}
 	
 	private StringValue getValue(String paramName) {
