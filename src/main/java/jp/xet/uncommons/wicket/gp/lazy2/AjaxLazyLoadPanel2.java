@@ -103,17 +103,18 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	}
 	
 	/**
+	 * lazy load componentを生成して返す。
 	 * 
-	 * @param markupId
-	 *            The components markupid.
+	 * @param markupId The components markupid.
 	 * @return The component that must be lazy created. You may call setRenderBodyOnly(true) on this
 	 *         component if you need the body only.
 	 */
 	public abstract Component getLazyLoadComponent(String markupId);
 	
 	/**
-	 * @param markupId
-	 *            The components markupid.
+	 * loading componentを生成して返す。
+	 * 
+	 * @param markupId The components markupid.
 	 * @return The component to show while the real component is being created.
 	 */
 	public Component getLoadingComponent(String markupId) {
@@ -123,9 +124,9 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * Provides an {@link AjaxChannel} for this ajax Behavior.
 	 * 
-	 * @return {@code null}
+	 * @return an {@link AjaxChannel} - Defaults to {@code null}.
 	 * @since 1.0
 	 */
 	protected AjaxChannel getChannel() {
@@ -167,15 +168,36 @@ public abstract class AjaxLazyLoadPanel2 extends Panel {
 	}
 	
 	
+	/**
+	 * {@link AjaxLazyLoadPanel2}のステートを表す列挙型。
+	 * 
+	 * @version $Id$
+	 * @author daisuke
+	 */
 	public enum RespondState {
 		
-		/** add loading component */
+		/**
+		 * initial state.
+		 * 
+		 * <p>{@link #LAZY_LOAD_COMPONENT_ID}にあたるコンポーネントは、このパネルの子コンポーネントとしてaddされていない状態。</p>
+		 */
 		LOADING_COMPONENT_ADDED,
 		
-		/** loading component added, waiting for ajax replace */
+		/**
+		 * loading component added, waiting for ajax replace.
+		 * 
+		 * <p>{@link #LAZY_LOAD_COMPONENT_ID}に{@link AjaxLazyLoadPanel2#getLoadingComponent(String) loading component}が
+		 * addされている。 {@link AbstractDefaultAjaxBehavior}へのcallbackによって、このコンポーネントが
+		 * {@link AjaxLazyLoadPanel2#getLazyLoadComponent(String) lazy load component}に置き換わるのを待っている状態。</p>
+		 */
 		WAITING_FOR_AJAX_REPLACE,
 		
-		/** ajax replacement completed */
+		/**
+		 * ajax replacement completed.
+		 * 
+		 * <p>{@link #LAZY_LOAD_COMPONENT_ID}に{@link AjaxLazyLoadPanel2#getLazyLoadComponent(String) lazy load component}が
+		 * addされており、遅延ロードが完了している状態。</p>
+		 */
 		COMPONENT_REPLACED
 	}
 }
