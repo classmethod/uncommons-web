@@ -35,6 +35,8 @@ import org.springframework.util.Assert;
 @SuppressWarnings("serial")
 public class CanonicalRefBehavior extends Behavior {
 	
+	private static final String FORMAT = "<link rel=\"canonical\" href=\"%s\"/>";
+	
 	private final IModel<String> canonicalUrlModel;
 	
 	
@@ -63,11 +65,7 @@ public class CanonicalRefBehavior extends Behavior {
 	public void renderHead(Component component, IHeaderResponse response) {
 		String canonicalUrl = canonicalUrlModel.getObject();
 		if (Strings.isEmpty(canonicalUrl) == false) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("<link rel=\"canonical\" href=\"");
-			sb.append(canonicalUrl);
-			sb.append("\"/>");
-			response.renderString(sb.toString());
+			response.renderString(String.format(FORMAT, Strings.escapeMarkup(canonicalUrl)));
 		}
 	}
 }
