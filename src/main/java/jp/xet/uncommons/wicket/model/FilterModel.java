@@ -23,6 +23,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
@@ -59,6 +60,9 @@ public class FilterModel<T> extends AbstractReadOnlyModel<List<? extends T>> {
 	@Override
 	public void detach() {
 		delegate.detach();
+		if (predicate instanceof IDetachable) {
+			((IDetachable) predicate).detach();
+		}
 	}
 	
 	@Override
