@@ -21,6 +21,7 @@ import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * {@link Label} implementation which abbreviates a String using ellipses.
@@ -89,8 +90,8 @@ public class AbbreviateLabel extends Label {
 	
 	@Override
 	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
-		String string = getDefaultModelObjectAsString();
-		replaceComponentTagBody(markupStream, openTag, abbreviate(string, maxWidth));
+		String abbreviated = abbreviate(getDefaultModelObjectAsString(), maxWidth);
+		replaceComponentTagBody(markupStream, openTag, Strings.escapeMarkup(abbreviated));
 	}
 	
 	/**
