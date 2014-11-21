@@ -4,7 +4,7 @@
   <groupId>jp.xet.uncommons</groupId>
   <artifactId>uncommons-web</artifactId>
   <packaging>jar</packaging>
-  <version>1.11-SNAPSHOT</version>
+  <version>1.11</version>
   <inceptionYear>2011</inceptionYear>
   <licenses>
     <license>
