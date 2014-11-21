@@ -16,42 +16,40 @@
  */
 package jp.xet.uncommons.spring;
 
-import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.services.dynamodb.AmazonDynamoDB;
-import com.amazonaws.services.dynamodb.model.AttributeAction;
-import com.amazonaws.services.dynamodb.model.AttributeValue;
-import com.amazonaws.services.dynamodb.model.AttributeValueUpdate;
-import com.amazonaws.services.dynamodb.model.BatchWriteItemRequest;
-import com.amazonaws.services.dynamodb.model.BatchWriteItemResult;
-import com.amazonaws.services.dynamodb.model.ComparisonOperator;
-import com.amazonaws.services.dynamodb.model.Condition;
-import com.amazonaws.services.dynamodb.model.CreateTableRequest;
-import com.amazonaws.services.dynamodb.model.CreateTableResult;
-import com.amazonaws.services.dynamodb.model.DeleteRequest;
-import com.amazonaws.services.dynamodb.model.DescribeTableRequest;
-import com.amazonaws.services.dynamodb.model.DescribeTableResult;
-import com.amazonaws.services.dynamodb.model.GetItemRequest;
-import com.amazonaws.services.dynamodb.model.GetItemResult;
-import com.amazonaws.services.dynamodb.model.Key;
-import com.amazonaws.services.dynamodb.model.KeySchema;
-import com.amazonaws.services.dynamodb.model.KeySchemaElement;
-import com.amazonaws.services.dynamodb.model.ProvisionedThroughput;
-import com.amazonaws.services.dynamodb.model.PutItemRequest;
-import com.amazonaws.services.dynamodb.model.PutItemResult;
-import com.amazonaws.services.dynamodb.model.ResourceNotFoundException;
-import com.amazonaws.services.dynamodb.model.ScalarAttributeType;
-import com.amazonaws.services.dynamodb.model.ScanRequest;
-import com.amazonaws.services.dynamodb.model.ScanResult;
-import com.amazonaws.services.dynamodb.model.UpdateItemRequest;
-import com.amazonaws.services.dynamodb.model.UpdateItemResult;
-import com.amazonaws.services.dynamodb.model.WriteRequest;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
+import com.amazonaws.services.dynamodbv2.model.BatchWriteItemRequest;
+import com.amazonaws.services.dynamodbv2.model.BatchWriteItemResult;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
+import com.amazonaws.services.dynamodbv2.model.CreateTableResult;
+import com.amazonaws.services.dynamodbv2.model.DeleteRequest;
+import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
+import com.amazonaws.services.dynamodbv2.model.DescribeTableResult;
+import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
+import com.amazonaws.services.dynamodbv2.model.GetItemResult;
+import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
+import com.amazonaws.services.dynamodbv2.model.KeyType;
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
+import com.amazonaws.services.dynamodbv2.model.PutItemResult;
+import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
+import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
+import com.amazonaws.services.dynamodbv2.model.UpdateItemResult;
+import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 import com.amazonaws.util.DateUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -73,8 +71,6 @@ import org.springframework.util.Assert;
 public class DynamoPersistentTokenRepository implements PersistentTokenRepository, InitializingBean {
 	
 	private static Logger logger = LoggerFactory.getLogger(DynamoPersistentTokenRepository.class);
-	
-	private static DateUtils dateUtils = new DateUtils();
 	
 	private static final String USERNAME = "Username";
 	
@@ -118,11 +114,11 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 		}
 		
 		try {
-			Map<String, AttributeValue> item = Maps.newHashMap();
+			Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
 			item.put(USERNAME, new AttributeValue(token.getUsername()));
 			item.put(SERIES, new AttributeValue(token.getSeries()));
 			item.put(TOKEN, new AttributeValue(token.getTokenValue()));
-			item.put(LAST_USED, new AttributeValue(dateUtils.formatIso8601Date(token.getDate())));
+			item.put(LAST_USED, new AttributeValue(DateUtils.formatISO8601Date(token.getDate())));
 			
 			PutItemRequest putRequest = new PutItemRequest()
 				.withTableName(persistentLoginTable)
@@ -145,7 +141,7 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 		try {
 			GetItemRequest getRequest = new GetItemRequest()
 				.withTableName(persistentLoginTable)
-				.withKey(new Key(new AttributeValue(seriesId)));
+				.withKey(Collections.singletonMap(SERIES, new AttributeValue(seriesId)));
 			GetItemResult result = dynamoDb.getItem(getRequest);
 			if (logger.isDebugEnabled()) {
 				logger.debug("Token retrieved: {}", result);
@@ -162,14 +158,12 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 			String username = item.get(USERNAME).getS();
 			String series = item.get(SERIES).getS();
 			String tokenValue = item.get(TOKEN).getS();
-			Date lastUsed = dateUtils.parseIso8601Date(item.get(LAST_USED).getS());
+			Date lastUsed = DateUtils.parseISO8601Date(item.get(LAST_USED).getS());
 			return new PersistentRememberMeToken(username, series, tokenValue, lastUsed);
 		} catch (AmazonServiceException e) {
 			logger.error("Failed to load token for series " + seriesId, e);
 		} catch (AmazonClientException e) {
 			logger.error("Failed to load token for series " + seriesId, e);
-		} catch (ParseException e) {
-			logger.error("", e);
 		} catch (Exception e) {
 			logger.error("unknown exception", e);
 		}
@@ -195,7 +189,8 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 			
 			List<WriteRequest> writeRequests = Lists.newArrayListWithCapacity(result.getCount());
 			for (Map<String, AttributeValue> item : result.getItems()) {
-				DeleteRequest deleteRequest = new DeleteRequest().withKey(new Key(item.get(SERIES)));
+				DeleteRequest deleteRequest = new DeleteRequest()
+					.withKey(Collections.singletonMap(SERIES, item.get(SERIES)));
 				writeRequests.add(new WriteRequest().withDeleteRequest(deleteRequest));
 			}
 			
@@ -255,14 +250,14 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 		}
 		
 		try {
-			String now = dateUtils.formatIso8601Date(new Date());
+			String now = DateUtils.formatISO8601Date(new Date());
 			Map<String, AttributeValueUpdate> attributeUpdates = Maps.newHashMapWithExpectedSize(2);
 			attributeUpdates.put(TOKEN, new AttributeValueUpdate(new AttributeValue(tokenValue), AttributeAction.PUT));
 			attributeUpdates.put(LAST_USED, new AttributeValueUpdate(new AttributeValue(now), AttributeAction.PUT));
 			
 			UpdateItemRequest updateRequest = new UpdateItemRequest()
 				.withTableName(persistentLoginTable)
-				.withKey(new Key(new AttributeValue(series)))
+				.withKey(Collections.singletonMap(SERIES, new AttributeValue(series)))
 				.withAttributeUpdates(attributeUpdates);
 			UpdateItemResult result = dynamoDb.updateItem(updateRequest);
 			if (logger.isDebugEnabled()) {
@@ -277,10 +272,10 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 		if (logger.isTraceEnabled()) {
 			logger.trace("DynamoDB table create: {}", tableName);
 		}
-		KeySchema ks = new KeySchema()
-			.withHashKeyElement(new KeySchemaElement()
-				.withAttributeName(SERIES)
-				.withAttributeType(ScalarAttributeType.S));
+		
+		KeySchemaElement kse = new KeySchemaElement()
+			.withKeyType(KeyType.HASH)
+			.withAttributeName(SERIES);
 		
 		ProvisionedThroughput provisionedThroughput = new ProvisionedThroughput()
 			.withReadCapacityUnits(defaultReadCapacityUnits)
@@ -288,7 +283,7 @@ public class DynamoPersistentTokenRepository implements PersistentTokenRepositor
 		
 		CreateTableRequest request = new CreateTableRequest()
 			.withTableName(tableName)
-			.withKeySchema(ks)
+			.withKeySchema(kse)
 			.withProvisionedThroughput(provisionedThroughput);
 		
 		CreateTableResult result = dynamoDb.createTable(request);
