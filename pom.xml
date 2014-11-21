@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.jiemamy</groupId>
-    <artifactId>generic-master</artifactId>
-    <version>0.2.2</version>
-  </parent>
   <groupId>jp.xet.uncommons</groupId>
   <artifactId>uncommons-web</artifactId>
-  <version>1.10</version>
+  <packaging>jar</packaging>
+  <version>1.11</version>
   <inceptionYear>2011</inceptionYear>
   <licenses>
     <license>
@@ -22,6 +18,20 @@
     <connection>scm:git:git@github.com:dai0304/uncommons-web.git</connection>
     <developerConnection>scm:git:git@github.com:dai0304/uncommons-web.git</developerConnection>
   </scm>
+  <developers>
+    <developer>
+      <id>daisuke</id>
+      <name>Miyamoto Daisuke</name>
+      <email>dai.0304@gmail.com</email>
+      <url>https://twitter.com/daisuke_m</url>
+      <roles>
+        <role>lead</role>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>+9</timezone>
+    </developer>
+  </developers>
   <build>
     <resources>
       <resource>
@@ -53,18 +63,124 @@
     </testResources>
     <extensions>
       <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh</artifactId>
-        <version>1.0</version>
+        <groupId>org.springframework.build</groupId>
+        <artifactId>aws-maven</artifactId>
+        <version>5.0.0.RELEASE</version>
       </extension>
     </extensions>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.4.3</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <includes>
+            <include>**/*Test.java</include>
+          </includes>
+          <argLine>-enableassertions -Xms512M -Xmx512M</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <locales>ja,en</locales>
+          <inputEncoding>UTF-8</inputEncoding>
+          <outputEncoding>UTF-8</outputEncoding>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <source>1.6</source>
+          <charset>UTF-8</charset>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <show>public</show>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <id>non-aggregate</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+          <reportSet>
+            <id>aggregate</id>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.6</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report-only</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <aggregate>true</aggregate>
+          <inputEncoding>UTF-8</inputEncoding>
+          <outputEncoding>UTF-8</outputEncoding>
+          <linkJavadoc>true</linkJavadoc>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
   <dependencies>
     <!-- TEST DEPENDENCIES -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit-dep</artifactId>
-      <version>4.10</version>
+      <version>4.11</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -118,11 +234,13 @@
       <version>3.0.20100224</version>
       <scope>provided</scope>
     </dependency>
+    <!--
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>${guava-version}</version>
     </dependency>
+    -->
 
     <dependency>
       <groupId>org.springframework.data</groupId>
@@ -307,32 +425,30 @@
   </repositories>
   <distributionManagement>
     <repository>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/var/www/maven.xet.jp/release</url>
+      <id>aws-release</id>
+      <url>s3://maven.xet.jp/release</url>
     </repository>
     <snapshotRepository>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/var/www/maven.xet.jp/snapshot</url>
+      <id>aws-snapshot</id>
+      <url>s3://maven.xet.jp/snapshot</url>
     </snapshotRepository>
     <site>
-      <id>maven.xet.jp</id>
-      <url>scp://maven.xet.jp/var/www/maven.xet.jp/site/${project.artifactId}/${project.version}</url>
+      <id>aws-site</id>
+      <url>s3://maven.xet.jp/site/${project.artifactId}/${project.version}</url>
     </site>
   </distributionManagement>
   <properties>
     <baseunits-version>[2.0,3.0)</baseunits-version>
-    <slf4j-version>[1.6.2,1.7.0)</slf4j-version>
-    <logback-version>[1.0.0,1.1.0)</logback-version>
-    <spring-version>[3.1.0.RELEASE,3.2.99.RELEASE]</spring-version>
-    <spring-security-version>[3.1.0.RELEASE,3.1.99.RELEASE]</spring-security-version>
-    <spring-data-core-version>[1.1.0.RELEASE,1.1.99.RELEASE]</spring-data-core-version>
-    <spring-integration-version>[2.1.0.RELEASE,2.1.99.RELEASE]</spring-integration-version>
+    <slf4j-version>[1.6.2,)</slf4j-version>
+    <logback-version>[1.0.0,)</logback-version>
+    <spring-version>[3.1.0.RELEASE,)</spring-version>
+    <spring-security-version>[3.1.0.RELEASE,)</spring-security-version>
+    <spring-data-core-version>[1.1.0.RELEASE,)</spring-data-core-version>
+    <spring-integration-version>[2.1.0.RELEASE,)</spring-integration-version>
     <spring-social-version>1.0.2.RELEASE</spring-social-version>
     <wicket-version>[1.5.0,1.6.0)</wicket-version>
-    <aws-java-sdk-version>[1.3.8,1.4)</aws-java-sdk-version>
+    <aws-java-sdk-version>[1.3.8,)</aws-java-sdk-version>
     <icu4j-version>[4.8.1.1,5.0)</icu4j-version>
-    <guava-version>10.0.1</guava-version>
-    <commons-lang-version>2.6</commons-lang-version>
-    <commons-io-version>2.0.1</commons-io-version>
+    <guava-version>[10.0.1,)</guava-version>
   </properties>
 </project>
